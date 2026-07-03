@@ -14,6 +14,7 @@ const albumPhotos = {
     "current-gym": ["gym02.jpeg", "gym03.jpeg", "gym04.jpeg", "gym05.jpeg", "gym06.jpeg", "gym07.jpeg", "gym08.jpeg", "gym09.jpeg", "gym10.jpeg", "gym11.jpeg", "gym12.jpeg", "gym13.jpeg", "gym14.jpeg", "gym15.jpeg", "gym16.jpeg", "gym17.jpeg", "gym18.jpeg", "gym19.jpeg", "gym20.jpeg", "gym21.jpeg", "gym22.jpeg", "pic36.jpeg", "pic37.jpeg", "pic38.jpeg", "pic39.jpeg", "pic40.jpeg", "pic41.jpeg"],
     "pink-day": ["pinkday2.jpeg", "pinkday3.jpeg", "pinkday4.jpeg", "pinkday5.jpeg", "pinkday6.jpeg", "pinkday7.jpeg", "pinkday8.jpeg", "pinkday9.jpeg", "pinkday10.jpeg", "pinkday11.jpeg", "pinkday12.jpeg", "pinkday13.jpeg", "pinkday14.jpeg", "pinkday15.jpeg", "pinkday16.jpeg", "pinkday17.jpeg", "pinkday18.jpeg", "pinkday19.jpeg", "pinkday20.jpeg", "pinkday30.jpeg", "pinkday21.jpeg", "pinkday22.jpeg", "pinkday23.jpeg", "pinkday25.jpeg", "pinkday26.jpeg", "pinkday27.jpeg", "pinkday28.jpeg"], 
     "bodybuilding": ["Kelli01.jpeg", "Kelli03.jpeg", "Kelli04.jpeg", "Romain01.JPG", "Romain02.JPG", "Romain03.JPG", "Jordan.JPG", "Asani.JPG", "Mikey.jpeg","Donn02.jpeg","Donn03.jpeg","Donn04.jpeg"]
+    "jersey-day": ["jersey01.jpeg", "jersey02.jpeg", "jersey03.jpeg", "jersey04.jpeg", "jersey05.jpeg", "jersey06.jpeg", "jersey07.jpeg", "jersey08.jpeg", "jersey09.jpeg", "jersey10.jpeg", "jersey11.jpeg", "jersey12.jpeg", "jersey13.jpeg", "jersey14.jpeg"]
 };
 
 // 3. SLIDER LOGIC
