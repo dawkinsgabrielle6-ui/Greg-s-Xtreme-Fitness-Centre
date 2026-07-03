@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Waiver | Greg's Xtreme Fitness Centre</title>
+    <style>
+        :root {
+            --primary-red: #ff3131;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #b0b0b0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0a0a0a;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column; /* Stacks the container elements vertically */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px; /* Provides breathing room at top and bottom edges */
+            box-sizing: border-box;
+        }
+
+        .waiver-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            color: var(--primary-red);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .waiver-content {
+            background: rgba(0,0,0,0.3);
+            height: 300px;
+            overflow-y: scroll;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            border: 1px solid var(--glass-border);
+            margin: 20px 0;
+        }
+
+        .waiver-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .waiver-content::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 10px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            cursor: pointer;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .checkbox-container input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-red);
+            cursor: pointer;
+        }
+
+        .btn-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .accept-btn {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .accept-btn.active {
+            opacity: 1;
+            pointer-events: all;
+            box-shadow: 0 0 20px rgba(255, 49, 49, 0.4);
+        }
+
+        .accept-btn:hover {
+            transform: scale(1.05);
+            background: #ff4d4d;
+        }
+
+        /* Footer styling elements */
+        .xtreme-footer {
+            margin-top: 35px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-align: center;
+            opacity: 0.6;
+        }
+
+        /* Ensure the drawer is styled for your industrial aesthetic */
+        .mobile-menu-drawer {
+            background: #000; /* Or your dark theme color */
+            border-bottom: 2px solid #ff4500; /* Xtreme accent color */
+            padding: 20px;
+            position: absolute;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Hide drawer by default on desktop if needed */
+        @media (min-width: 769px) {
+            .mobile-menu-btn, .mobile-menu-drawer {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="waiver-card">
+    <h1>Safety Liability Waiver</h1>
+    <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted);">Please read the terms below to continue registration.</p>
+    
+    <div class="waiver-content">
+        <h3>1. Acknowledgment of Risk</h3>
+        <p>I acknowledge that participation in physical fitness activities, including but not limited to <strong>Step Aerobics, Circuit Training, Dance, and High-Intensity Aerobics</strong>, involves inherent risks of injury. These risks include muscle strains, joint injuries, and cardiovascular stress.</p>
+
+        <h3>2. Physical Condition</h3>
+        <p>I represent that I am in good physical condition and have no medical reason or impairment that would prevent me from participating in Greg’s Xtreme Fitness Centre classes.</p>
+
+        <h3>3. Release of Liability</h3>
+        <p>I hereby release, waive, and discharge Greg’s Xtreme Fitness Centre, its owners, and employees from any and all liability, claims, or causes of action arising out of my participation.</p>
+
+        <h3>4. Emergency Treatment</h3>
+        <p>I consent to receive medical treatment which may be deemed advisable in the event of injury or illness during my time at the facility.</p>
+
+        <h3>5. Media Release</h3>
+        <p>I grant permission for Greg’s Xtreme Fitness Centre to use my likeness in photographs or videos for promotional purposes.</p>
+
+        <p><strong>BY CHECKING THE BOX BELOW, I AGREE TO ALL TERMS LISTED ABOVE.</strong></p>
+    </div>
+
+    <label class="checkbox-container">
+        <input type="checkbox" id="waiverCheck">
+        <span>I have read the Safety Waiver and agree to be bound by its terms and conditions.</span>
+    </label>
+
+    <div class="btn-container">
+        <button id="submitBtn" class="accept-btn">Confirm & Continue</button>
+    </div>
+</div>
+
+<!-- Footer Component Insertion -->
+<footer class="xtreme-footer">
+    &copy; 2026 GREG'S XTREME FITNESS CENTRE. ALL RIGHTS RESERVED.
+</footer>
+
+<script>
+    const checkbox = document.getElementById('waiverCheck');
+    const button = document.getElementById('submitBtn');
+
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+
+    button.addEventListener('click', function() {
+        alert('Waiver Signed! Redirecting to complete your membership...');
+        
+        // This directs the user back to the short pass page
+        window.location.href = "signup-short.html";
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('menuToggle');
+    const menuDrawer = document.getElementById('mobileMenu');
+
+    if (menuBtn && menuDrawer) {
+        menuBtn.addEventListener('click', () => {
+            // Check current display state and toggle
+            if (menuDrawer.style.display === 'none' || menuDrawer.style.display === '') {
+                menuDrawer.style.display = 'block';
+                menuBtn.setAttribute('aria-expanded', 'true');
+            } else {
+                menuDrawer.style.display = 'none';
+                menuBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>

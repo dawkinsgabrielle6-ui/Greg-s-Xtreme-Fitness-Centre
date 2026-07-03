@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Portal | Greg's Xtreme Fitness Centre</title>
+    <link rel="stylesheet" href="staff.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="portal-wrapper">
+        <div class="portal-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-logo">GREG'S <span>XTREME</span></div>
+                <p>STAFF MANAGEMENT TERMINAL v2.0</p>
+            </div>
+        </div>
+
+        <div class="portal-login-section">
+            <div class="login-box">
+                <a href="index.html" class="exit-btn"><i class="fas fa-times"></i></a>
+                
+                <h2>WELCOME!!</h2>
+                <p class="subtitle">AUTHORIZE PERSONAL ONLY!!</p>
+
+                <form id="staff-auth-form">
+                    <div class="input-group">
+                        <label>Username</label>
+                        <div class="input-field">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="username" placeholder="Enter username" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group" id="pass-wrapper">
+                        <label>Password</label>
+                        <div class="input-field">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" placeholder="Enter password" required>
+                            <button type="button" class="view-toggle" onclick="toggleVision('password')">
+                                <i class="fas fa-eye" id="password-eye"></i>
+                            </button>
+                        </div>
+                        <button type="button" class="forgot-link" onclick="triggerPinTrap()">Forgot Password? Use PIN</button>
+                    </div>
+
+                    <div id="pin-area" class="input-group pin-trap hidden">
+                        <label>Security PIN</label>
+                        <div class="input-field">
+                            <i class="fas fa-shield-halved"></i>
+                            <input type="password" id="secondary-key" maxlength="4" placeholder="••••">
+                            <button type="button" class="view-toggle" onclick="toggleVision('secondary-key')">
+                                <i class="fas fa-eye" id="pin-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="auth-btn" id="loginBtn">
+                        <span>LOGIN</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <div id="error-msg" class="error-banner hidden"></div>
+            </div>
+        </div>
+    </div>
+    
+<footer>
+        <div class="footer-bottom-bar">
+            <p>© 2026 GREG'S XTREME FITNESS CENTRE.ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script src="staff.js"></script>
+</body>
+</html>

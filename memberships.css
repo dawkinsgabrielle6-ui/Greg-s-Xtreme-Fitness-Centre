@@ -1,0 +1,1036 @@
+/*=====================================================
+ 1. GLOBAL FIXES 
+ ======================================================*/
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #0b0b0b;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+:root {
+    --red: #d90000;
+    --transition: 0.3s ease;
+}
+
+/*=======================================================
+2. NAVIGATION & DROPDOWN
+=========================================================*/
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+:root {
+    --red: #ff0000;
+    --transition: all 0.3s ease;
+}
+
+.xtreme-nav-header {
+    background: #000;
+    padding: 10px 0;
+    border-bottom: 2px solid #1a1a1a;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* This pushes Logo Left and Nav Right */
+    max-width: 100%;
+    padding: 0 50px;
+}
+
+/* Ensure the nav-section doesn't grow and push the logo off-center */
+.nav-section {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 992px) {
+    .nav-container { padding: 0 20px; }
+    
+    .nav-section.right {
+        display: none; 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000;
+        flex-direction: column;
+        padding-bottom: 20px;
+    }
+
+    .nav-container.mobile-active .nav-section.right {
+        display: flex;
+    }
+}
+/* --- NAVIGATION LINKS --- */
+.main-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav > li {
+    position: relative;
+}
+
+.main-nav > li > a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    transition: var(--transition);
+    position: relative;
+    white-space: nowrap;
+    display: block;
+}
+
+/* RED UNDERLINE EFFECT */
+.main-nav > li > a::after {
+    content: '';
+    position: absolute;
+    bottom: 8px; /* Lifted slightly to look cleaner */
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background-color: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.main-nav > li > a:hover::after,
+.main-nav > li > a.active::after {
+    transform: scaleX(1);
+}
+
+.main-nav > li > a:hover,
+.main-nav > li > a.active {
+    color: var(--red);
+}
+
+/* --- LOGO STYLING --- */
+.logo-horizontal {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-main-row { 
+    display: flex; 
+    align-items: baseline; 
+    gap: 4px; 
+}
+
+.gregs { 
+    color: var(--red); 
+    font-family: 'Times New Roman', serif; 
+    font-size: 1.8rem; 
+    font-weight: bold; 
+}
+
+.x-accent { 
+    color: var(--red); 
+    font-family: Arial, sans-serif; 
+    font-size: 2.2rem; 
+    font-weight: 900; 
+    font-style: italic; 
+    line-height: 1; 
+}
+
+.treme { 
+    color: #fff; 
+    font-family: 'Times New Roman', serif; 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+}
+
+.swoosh-line { 
+    width: 100%; 
+    height: 3px; 
+    background: #8bc34a; 
+    margin: 2px 0; 
+    border-radius: 10px; 
+}
+
+.logo-sub-row { 
+    color: #8bc34a; 
+    font-family: 'Oswald', sans-serif; 
+    font-size: 0.8rem; 
+    letter-spacing: 4px; 
+    text-align: center; 
+    font-weight: 700; 
+}
+
+/* --- DROPDOWN & PORTAL LOGIC --- */
+.dropdown { position: relative; }
+
+/* Global Dropdown Menu Style */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #000;
+    border-top: 3px solid var(--red);
+    min-width: 200px;
+    padding: 10px 0;
+    list-style: none;
+    z-index: 2000;
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.3);
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 12px 20px;
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.dropdown-menu li a:hover {
+    background: #1a1a1a;
+    color: var(--red);
+    padding-left: 30px;
+}
+
+/* Portal Login Styling */
+.portal-dropdown {
+    margin-left: 30px; /* Space between Contact Us and Portal */
+    border: 1px solid #333;
+    border-radius: 4px;
+}
+
+.portal-dropdown:hover {
+    border-color: var(--red);
+}
+
+.portal-menu {
+    left: auto;
+    right: 0; /* Aligns portal menu to the right of the button */
+}
+
+/* Invisible bridge to prevent flickering */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 0;
+    right: 0;
+    height: 15px;
+    background: transparent;
+}
+
+
+/* --- DESKTOP VIEW (Default) --- */
+@media (min-width: 993px) {
+    .mobile-menu-btn { display: none !important; }
+    .nav-section.right { display: flex !important; position: static !important; }
+}
+
+/* --- MOBILE VIEW --- */
+@media (max-width: 992px) {
+    /* Explicitly override to show the button */
+    .mobile-menu-btn {
+        display: block !important; 
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 99999;
+        position: relative;
+    }
+
+    .nav-section.right {
+        display: none; 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000;
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 0;
+        border-top: 2px solid var(--red);
+        z-index: 9999;
+    }
+
+    .nav-container.mobile-active .nav-section.right {
+        display: flex !important;
+    }
+
+    .main-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+
+/*======================================
+3. HERO SECTION
+========================================*/
+.hero {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+}
+
+.hero-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.65);
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+}
+
+.hero-overlay h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3rem;
+    color: var(--red);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.hero-overlay .quote {
+    font-family: 'Playfair Display', serif; /* Or any elegant serif */
+    font-style: italic;
+    font-size: 1.1rem; /* Smaller size */
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.8); /* Softer white */
+    letter-spacing: 0.5px;
+    margin-top: -10px; /* Brings it closer to the H1 */
+    line-height: 1.5;
+    position: relative;
+    display: inline-block;
+}
+
+/* Optional: Adding very fine quote marks */
+.hero-overlay .quote::before {
+    content: "“";
+    position: absolute;
+    left: -20px;
+    opacity: 0.3;
+}
+
+/*===========================================================
+ 4. FITNESS JOURNEY SECTION
+ ============================================================*/
+.journey-section {
+    background: #111;
+    color: #fff;
+    padding: 90px 20px;
+    text-align: center;
+}
+
+.journey-section h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.6rem;
+    color: #d90000;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+    margin-top: -10px;
+}
+
+.journey-steps .step p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300; /* Ultra light */
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 4px; /* Spreads the letters for airiness */
+    color: #ffffff;
+    padding-top: 15px;
+    display: inline-block;
+    margin-top: -12px;
+}
+
+.journey-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.step {
+    background: #0a0a0a;
+    padding: 40px 25px;
+    border-radius: 16px;
+    border: 1px solid #1a1a1a;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-10px);
+    border-color: var(--red);
+}
+
+.step-number {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5rem;
+    color: var(--red);
+    margin-bottom: 15px;
+}
+
+.svg-icon {
+    display: block;
+    margin: 0 auto 15px;
+    stroke: #ffffff; /* Fixed: Ensuring icons use your brand red */
+}
+
+
+/* ======================================================
+   5. MEMBERSHIP CARDS
+   ====================================================== */
+.membership-interactive {
+    background: #000;
+    padding: 60px 0 80px;
+    overflow: hidden;
+}
+
+.membership-header {
+    text-align: center;
+    padding-bottom: 50px;
+    perspective: 1000px; /* Adds a bit of 3D depth */
+    margin-top: -130px;
+}
+
+/* Main Header: Bold, White, and Sharp */
+.membership-header h2 {
+    font-family: 'Oswald', sans-serif;
+    color: #fff;
+    font-size: 4.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    letter-spacing: -1px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+}
+
+/* Interaction: Title "Glows" red from behind */
+.membership-header:hover h2 {
+    color: #950505;
+    transform: scale(1.05);
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+}
+
+/* Subheading: The Label Style */
+.membership-header p {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 15px auto 0;
+    padding: 5px 20px;
+    border-left: 2px solid #ff0000;
+    border-right: 2px solid #ff0000;
+    width: fit-content;
+    transition: all 0.4s ease;
+}
+
+/* Interaction: The brackets expand on hover */
+.membership-header:hover p {
+    background: #ff00001f;
+    color: #000;
+    font-weight: 700;
+}
+
+.plan-slider-container {
+    position: relative;
+    max-width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 50px;
+    display: block;
+    margin-bottom: -40px;
+}
+
+.plan-slider {
+    display: flex;
+    gap: 25px; /* Keeps consistent spacing between cards */
+    overflow-x: auto; /* This allows you to swipe/scroll left and right */
+    scroll-behavior: smooth;
+    padding: 30px 10px; /* Space for the hover scale effect */
+    scrollbar-width: none; /* Hides the scrollbar for a cleaner look on Firefox */
+    -ms-overflow-style: none; /* Hides scrollbar for IE/Edge */
+    align-items: stretch; /* Ensures all cards are the same height */
+}
+
+/* Hides scrollbar for Chrome, Safari, and newer Edge */
+.plan-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.plan-card-new {
+    min-width: 200px; /* Wider footprint */
+    max-width: 250px;
+    height: 400px;
+    background: #0f0f0f; /* Deep black-grey */
+    border: 1px solid #1a1a1a;
+    border-radius: 20px; /* Smooth rounded corners */
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center-aligns all content */
+    position: relative;
+    transition: transform 0.3s ease;
+    flex-shrink: 0; /* Important: This prevents cards from shrinking to fit */
+    text-align: center;
+
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    justify-content: space-between;
+}
+
+
+/* Featured Monthly Pass Highlight */
+.plan-card-new.featured {
+    border: 1.5px solid #ff0000; /* Bright red border */
+    position: relative;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.15); /* Soft red glow */
+}
+
+/* Floating Recommended Tab */
+.plan-card-new.featured::before {
+    content: 'RECOMMENDED';
+    position: absolute;
+    top: -12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 4px 14px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+/* Badge Styling */
+.plan-badge {
+    background: #1a1a1a;
+    color: #888;
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.plan-badge.hot {
+    background: #ff0000;
+    color: #fff;
+    width: 70%; /* Wide pill shape */
+    font-weight: 700;
+}
+
+/* Typography */
+.plan-card-new h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.price {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.price sup {
+    font-size: 1.1rem;
+    color: #ff0000; /* Red JM$ currency */
+    margin-right: 4px;
+    top: -0.8em;
+}
+
+.plan-card-new p {
+    font-size: 0.9rem;
+    color: #999;
+    line-height: 1.5;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Hollow Red Button Fix */
+.select-btn {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid #ff0000; /* Red outline */
+    border-radius: 6px;
+    padding: 14px 0;
+    width: 100%;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.select-btn:hover {
+    background: #ff0000; /* Solid red on hover */
+}
+
+/* Control Arrows */
+.control-btn {
+    background-color: #333; /* Dark background */
+    color: white;           /* White arrows */
+    border: none;
+    padding: 15px;
+    border-radius: 50%;     /* Circular buttons */
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #333;
+    background: #0a0a0a;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: -25px;
+}
+
+.control-btn:hover {
+    background-color: #555; /* Lighten on hover */
+    border-color: #fff;
+    transform: scale(1.1);
+}
+
+.control-btn i {
+    font-size: 20px; /* Adjust arrow size */
+}
+
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+    position: relative;
+    z-index: 10;
+}
+
+
+/* Header Layout */
+.slider-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Pushes arrows left and progress right */
+    margin-bottom: 15px;
+    padding: 0 5px;
+}
+
+/* Cuter Arrows on the Left */
+.cute-arrows-left {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-arrow {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2.0rem;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.nav-arrow:hover {
+    color: #ff0000;
+    transform: scale(1.1);
+}
+
+/* Small Progress Bar on the Right */
+.mini-progress-right {
+    width: 100px; /* Shortened width */
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-inner {
+    height: 100%;
+    width: 0%;
+    background: #ff0000;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+    transition: width 0.3s ease-out;
+}
+
+/* Clean Tap Navigation */
+.tap-nav {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tap-nav span {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.tap-nav span:hover {
+    color: #fff;
+}
+
+@media (max-width: 991px) {
+    /* Ensure the parent container is full width and centers children */
+    .plan-container-wrapper, /* Adjust this selector to your actual parent div */
+    .plan-slider {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important; /* Centers cards horizontally */
+        justify-content: center !important; /* Centers cards vertically */
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin: 0 auto !important;
+    }
+
+    .plan-card-new {
+        width: 85% !important; /* Forces the card to take up 85% of screen width */
+        margin: 10px auto !important; /* The 'auto' here is key to centering the card */
+        flex: none !important; /* Prevents flex from squishing the card */
+    }
+}
+
+
+/* ==========================================================================
+   6. AGREEMENT NOTICE
+   ========================================================================== */
+.agreement-notice {
+    padding: 80px 20px;
+    background: #000;
+    text-align: center;
+}
+
+.pathway-title {
+    color: #d90000;
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.3rem;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    margin-top: -20px;
+}
+
+.pathway-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0; /* Connected by the line */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.pathway-step {
+    flex: 1;
+    text-decoration: none;
+    position: relative;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+/* The Connecting Line */
+.step-line {
+    width: 100px;
+    height: 2px;
+    background: #333;
+    position: relative;
+}
+
+.pathway-step i {
+    background: #0a0a0a;
+    border: 2px solid #333;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    display: inline-block;
+    transition: all 0.4s ease;
+}
+
+.pathway-step h4 {
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.pathway-step p {
+    color: #666;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Hover Effects */
+.pathway-step:hover i {
+    border-color: #ff0000;
+    color: #ff0000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.pathway-step:hover h4 {
+    color: #ff0000;
+}
+
+/*===================================================
+ 7. FOOTER 
+ ====================================================*/
+.xtreme-footer {
+    background: #000;
+    position: relative;
+    padding-top: 20px; /* Reduced from 60px */
+    margin-top: 20px;  /* Brought closer to the section above */
+    color: #fff;
+}
+
+/* The aggressive diagonal top edge - Made slightly shallower */
+.footer-top-slant {
+    position: absolute;
+    top: -30px; /* Reduced from -40px */
+    left: 0;
+    width: 100%;
+    height: 60px; /* Reduced from 80px */
+    background: #000;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+    border-top: 4px solid #d90000;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 10px 20px; /* Thinner padding */
+    margin-top: 60px;
+}
+
+.footer-main {
+    text-align: center;
+    padding-bottom: 20px; /* Reduced from 40px */
+}
+
+/* Big Bold Branding - PULLED UP HIGHER */
+.footer-logo-section {
+    margin-top: -60px; /* This pulls the logo UP into the slant */
+    position: relative;
+    z-index: 5;
+}
+
+.footer-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.8rem; /* Made slightly bigger since it's the hero now */
+    letter-spacing: -1px;
+    margin-bottom: 0px; 
+}
+
+.footer-logo span {
+    color: #d90000;
+    -webkit-text-stroke: 1px #d90000;
+}
+
+.footer-logo-section p {
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 4px;
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 15px; /* Reduced from 30px */
+}
+
+.footer-divider {
+    width: 40px; /* Smaller divider */
+    height: 3px;
+    background: #d90000;
+    margin: 0 auto 30px; /* Reduced from 50px */
+}
+
+/* 3-Column Info Grid - MORE COMPACT */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; /* Reduced from 40px */
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 20px; /* Reduced from 40px */
+}
+
+.footer-col h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    color: #d90000;
+    margin-bottom: 10px;
+}
+
+.footer-col p, .footer-col a {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; /* Slightly smaller text */
+    color: #aaa;
+    text-decoration: none;
+    line-height: 1.4;
+}
+
+/* Bottom Copyright Bar */
+.footer-bottom-bar {
+    padding: 15px 0; /* Reduced from 30px */
+    text-align: center;
+}
+
+.footer-bottom-bar p {
+    font-size: 0.7rem;
+    color: #444;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.footer-map {
+    margin-top: 15px;
+    border: 1px solid #1d1b1b; /* Dark border to match theme */
+    border-radius: 4px;
+    overflow: hidden;
+    filter: grayscale(100%) invert(90%) contrast(100%); /* Optional: Makes the map dark-themed */
+    transition: 0.3s;
+}
+
+.footer-map:hover {
+    filter: none; /* Map turns to full color on hover */
+}
+
+.footer-map iframe {
+    display: block;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.footer-socials a {
+    width: 38px;
+    height: 38px;
+    background: #111; /* Dark background */
+    border: 1px solid #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.footer-socials svg {
+    width: 18px; /* Perfectly sized inside the circle */
+    height: 18px;
+    fill: #fff; /* Icons start as white */
+    transition: fill 0.3s ease;
+}
+
+.footer-socials a:hover {
+    background: #000;
+    border-color: #d90000; /* Red border on hover */
+    transform: translateY(-3px);
+}
+
+.footer-socials a:hover svg {
+    fill: #d90000; /* Icons turn red on hover */
+}
+
+/* Clean Alignment for Hours Column */
+.hours-wrap p {
+    display: flex;
+    justify-content: space-between; /* Pushes time to the right */
+    border-bottom: 1px solid #111; /* Subtle divider */
+    padding-bottom: 5px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.hours-wrap p span:first-child {
+    color: #d90000; /* Red days */
+    font-weight: bold;
+}
+
+/* Ensure social icons are aligned left under the title */
+.footer-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    justify-content: center; /* Center them for the main-section feel */
+}
+
+/* Make sure the grid handles the center column correctly */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    align-items: start;
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .footer-socials {
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   8. UTILITIES & ANIMATIONS
+   ========================================================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (max-width: 768px) {
+    .origin-container { flex-direction: column; text-align: center; }
+    .hero-content-cool h1 { font-size: 3.5rem; }
+    .card-stack { width: 280px; height: 400px; }
+    .pos-2 { transform: translate3d(40%, 0, -200px) scale(0.7); }
+    .pos-3 { transform: translate3d(-40%, 0, -200px) scale(0.7); }
+}

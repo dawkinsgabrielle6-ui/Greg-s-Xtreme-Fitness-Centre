@@ -1,0 +1,1077 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@300;400;700&display=swap');
+
+:root {
+    --red: #e63946;
+    --black: #000000;
+    --dark-grey: #0b0b0b;
+    --text-grey: #b0b0b0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: #0b0b0b;
+  color: #fff;
+  overflow-x: hidden; 
+  min-width: unset; 
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   2. NAVIGATION & DROPDOWN 
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+:root {
+    --red: #ff0000;
+    --transition: all 0.3s ease;
+}
+
+.xtreme-nav-header {
+    background: #000;
+    padding: 10px 0;
+    border-bottom: 2px solid #1a1a1a;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* This pushes Logo Left and Nav Right */
+    max-width: 100%;
+    padding: 0 50px;
+}
+
+/* Ensure the nav-section doesn't grow and push the logo off-center */
+.nav-section {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 992px) {
+    .nav-container { padding: 0 20px; }
+    
+    .nav-section.right {
+        display: none; 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000;
+        flex-direction: column;
+        padding-bottom: 20px;
+    }
+
+    .nav-container.mobile-active .nav-section.right {
+        display: flex;
+    }
+}
+/* --- NAVIGATION LINKS --- */
+.main-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav > li {
+    position: relative;
+}
+
+.main-nav > li > a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    transition: var(--transition);
+    position: relative;
+    white-space: nowrap;
+    display: block;
+}
+
+/* RED UNDERLINE EFFECT */
+.main-nav > li > a::after {
+    content: '';
+    position: absolute;
+    bottom: 8px; /* Lifted slightly to look cleaner */
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background-color: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.main-nav > li > a:hover::after,
+.main-nav > li > a.active::after {
+    transform: scaleX(1);
+}
+
+.main-nav > li > a:hover,
+.main-nav > li > a.active {
+    color: var(--red);
+}
+
+/* --- LOGO STYLING --- */
+.logo-horizontal {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-main-row { 
+    display: flex; 
+    align-items: baseline; 
+    gap: 4px; 
+}
+
+.gregs { 
+    color: var(--red); 
+    font-family: 'Times New Roman', serif; 
+    font-size: 1.8rem; 
+    font-weight: bold; 
+}
+
+.x-accent { 
+    color: var(--red); 
+    font-family: Arial, sans-serif; 
+    font-size: 2.2rem; 
+    font-weight: 900; 
+    font-style: italic; 
+    line-height: 1; 
+}
+
+.treme { 
+    color: #fff; 
+    font-family: 'Times New Roman', serif; 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+}
+
+.swoosh-line { 
+    width: 100%; 
+    height: 3px; 
+    background: #8bc34a; 
+    margin: 2px 0; 
+    border-radius: 10px; 
+}
+
+.logo-sub-row { 
+    color: #8bc34a; 
+    font-family: 'Oswald', sans-serif; 
+    font-size: 0.8rem; 
+    letter-spacing: 4px; 
+    text-align: center; 
+    font-weight: 700; 
+}
+
+/* --- DROPDOWN LOGIC --- */
+.dropdown { position: relative; }
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 90%; /* Brought closer to the nav text */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    min-width: 200px;
+    padding: 10px 0;
+    list-style: none;
+    border-top: 3px solid var(--red);
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+    z-index: 2100;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    padding: 12px 25px;
+    font-size: 13px;
+    color: #bbb;
+    display: block;
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.dropdown-menu a:hover {
+    background: #111;
+    color: var(--red);
+    padding-left: 35px; /* Slide effect on hover */
+}
+
+/* This creates an invisible bridge between the link and the menu */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -20px; /* This covers the gap above the menu */
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: transparent; /* Invisible to the user */
+}
+
+
+/* --- DESKTOP VIEW (Default) --- */
+@media (min-width: 993px) {
+    .mobile-menu-btn { display: none !important; }
+    .nav-section.right { display: flex !important; position: static !important; }
+}
+
+/* --- MOBILE VIEW --- */
+@media (max-width: 992px) {
+    /* Explicitly override to show the button */
+    .mobile-menu-btn {
+        display: block !important; 
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 99999;
+        position: relative;
+    }
+
+    .nav-section.right {
+        display: none; 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000;
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 0;
+        border-top: 2px solid var(--red);
+        z-index: 9999;
+    }
+
+    .nav-container.mobile-active .nav-section.right {
+        display: flex !important;
+    }
+
+    .main-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+/*====================================================== 
+GALLERY PAGE HEADER 
+=========================================================*/
+.gallery-header {
+    margin-bottom: 40px;
+    text-align: left;
+    border-left: 5px solid var(--accent-color, #ff3e3e);
+    padding-left: 20px;
+    margin-top: 45px;
+}
+
+.gallery-subtitle {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 0.9rem;
+    color: var(--accent-color, #ff3e3e);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.gallery-title {
+    font-family: 'Oswald', sans-serif; /* Matching your nav/footer */
+    font-size: 3.5rem;
+    margin: 0;
+    line-height: 1;
+    font-weight: 900;
+    color: #fff;
+}
+
+.gallery-title span {
+    -webkit-text-stroke: 1px #fff;
+    color: transparent; /* Makes "GALLERY" an outline for that industrial look */
+}
+
+.gallery-line {
+    width: 60px;
+    height: 4px;
+    background: var(--accent-color, #ff3e3e);
+    margin-top: 15px;
+}
+
+/*========================================================
+ ALBUMNS 
+ ==============================================================*/
+/* Fix Slider layering */
+.slider-container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    max-width: 100vw; /* Prevents it from being wider than the screen */
+    z-index: 1; /* Keep it behind the nav */
+    margin-top: -100px;
+    overflow: hidden; /* Ensures any oversized images don't create scrollbars */
+}
+
+/* Add this to your HTML inside .slider-container */
+/* <div class="slider-content-wrapper"> ... your slides ... </div> */
+
+.slider-content-wrapper {
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    height: 100%;
+}
+
+
+/* Position Slider Arrows so they aren't stuck in the corner */
+.slider-nav {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    z-index: 100;
+    display: flex;
+    gap: 15px;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.slide-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgb(144, 76, 76);
+    color: white;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+
+.nav-btn:hover {
+    background: var(--accent-color);
+}
+
+/* Huge background text that moves */
+.bg-text {
+    position: absolute;
+    font-size: 25vw;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.05);
+    z-index: 1;
+    transform: translateX(10%);
+    transition: 1.2s ease-out;
+}
+
+.slide.active .bg-text {
+    transform: translateX(-10%);
+}
+
+/* The Central Image */
+.image-wrapper {
+    position: relative;
+    z-index: 2;
+    /* CHANGE THESE LINES */
+    width: 500px;        /* Sets a fixed size for consistent look */
+    max-width: 90vw;     /* Ensures it doesn't overflow small screens */
+    height: 400px;       /* Set a fixed height to match your desired aspect ratio */
+    /* KEEP THESE LINES */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+    transform: scale(0.8);
+    transition: 1s transform ease;
+}
+
+.slide.active .image-wrapper {
+    transform: scale(1);
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Text Content */
+.info {
+    position: absolute;
+    z-index: 3;
+    left: 10%;
+    bottom: 15%;
+}
+
+.info h2 {
+    font-size: 5rem;
+    margin: 0;
+    line-height: 0.9;
+}
+
+.info h2 span {
+    display: block;
+    color: var(--accent-color, #ff3e3e);
+}
+
+@media (max-width: 992px) {
+    /* 1. Scale down the title size so it fits on mobile */
+    .info h2 {
+        font-size: 3rem !important; /* Smaller size for mobile */
+        line-height: 1.1;           /* Add breathing room between lines */
+    }
+
+    /* 2. Ensure the info container doesn't get pushed off-screen */
+    .info {
+        left: 5%;                   /* Bring it closer to the edge */
+        right: 5%;                  /* Ensure it has padding on the right */
+        bottom: 10%;
+    }
+}
+
+@media (max-width: 576px) {
+    /* 3. Further scale for very small phones */
+    .info h2 {
+        font-size: 2.2rem !important;
+    }
+}
+
+/*==========================================================
+MODAL POP-UP STYLING 
+=============================================================*/
+#photo-grid-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9); /* Centered and slightly smaller */
+    width: 90vw;
+    height: 85vh;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 10000; /* Above everything */
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+    
+    /* Animation */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow-y: auto;
+}
+
+/* When active, show the pop-up */
+#photo-grid-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Close Button Styling */
+#close-album {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+#close-album:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+/* Grid inside the Pop-up */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.grid-container img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.grid-container img:hover {
+    transform: scale(1.03);
+    border: 2px solid var(--accent-color);
+}
+
+/*======================================================
+ LIGHTBOX (Full Screen View) 
+ ================================================----==*/
+#lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 20000; /* Higher than Album Overlay */
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#lightbox-overlay.active {
+    display: flex;
+}
+
+#lightbox-img {
+    max-width: 85%;
+    max-height: 85%;
+    border-radius: 5px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    user-select: none;
+}
+
+#close-lightbox {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 50px;
+    color: white;
+    cursor: pointer;
+    z-index: 20001;
+}
+
+.lb-nav {
+    position: absolute;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 50%;
+    margin: 0 20px;
+}
+
+.lb-nav:hover {
+    background: var(--accent-color);
+}
+
+#lb-prev { left: 5%; }
+#lb-next { right: 5%; }
+
+/* Hide page scroll when overlays are active */
+body:has(#photo-grid-overlay.active),
+body:has(#lightbox-overlay.active) {
+    overflow: hidden;
+}
+
+/*============================================================
+ VIEW ALBUM BUTTON STYLING 
+ =============================================================*/
+.view-album-btn {
+    background: transparent;
+    border: 2px solid var(--accent-color, #d90000);
+    color: #fff;
+    padding: 12px 28px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+    z-index: 5;
+    margin-bottom: -90px;
+}
+
+.view-album-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-color, #d90000);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: -1;
+}
+
+.view-album-btn:hover {
+    color: #000;
+    font-weight: bold;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.view-album-btn:hover::before {
+    left: 0;
+}
+
+.view-album-btn:active {
+    transform: translateY(-1px);
+}
+
+/*===============================================================
+ LIGHTBOX & OVERLAY NAV BUTTONS 
+ =================================================================*/
+.lb-nav {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lb-nav:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    transform: scale(1.1);
+}
+/*===============================================================
+ CUTE & MODERN LIGHTBOX NAV 
+ =================================================================*/
+#close-lightbox {
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0; /* Hide the old 'X' text */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#close-lightbox:hover {
+    transform: rotate(90deg) scale(1.1);
+    background: var(--accent-color, #ff3e3e);
+}
+
+/* Rounded Navigation Pills */
+.lb-nav {
+    width: 55px;
+    height: 80px; /* Slightly tall pill shape */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 40px; /* Super rounded */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0 30px;
+}
+
+.lb-nav svg {
+    width: 28px;
+    height: 28px;
+    stroke: white;
+    stroke-width: 2.5; /* Thick, cute lines */
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+.lb-nav:hover {
+    background: white;
+    transform: scale(1.05);
+}
+
+.lb-nav:hover svg {
+    stroke: #000; /* Contrast color on hover */
+}
+
+#lb-prev { left: 3%; }
+#lb-next { right: 3%; }
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    .lb-nav {
+        bottom: 40px; /* Move to bottom on mobile for easy thumb reach */
+        height: 60px;
+        width: 60px;
+    }
+}
+
+/* --- KINETIC HEADER SLIDE-IN --- */
+.kinetic-header {
+    width: 100%;
+    overflow: hidden; /* Prevents horizontal scrollbars during animation */
+    padding: 40px 0;
+}
+
+.kinetic-wrapper {
+    border-left: 6px solid #ff2d95; /* Pink Accent */
+    padding-left: 25px;
+    margin-left: 5%; /* Starting position from the left edge */
+    
+    /* Animation Call */
+    opacity: 0;
+    transform: translateX(-100vw); /* Starts completely off-screen to the left */
+    animation: slideStraightAcross 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Subtitle Styling */
+.kinetic-subtitle {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    color: #ff2d95;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/* Title Styling */
+.kinetic-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    margin: 5px 0 0 0;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.kinetic-title span {
+    color: transparent;
+    -webkit-text-stroke: 1.5px #fff;
+}
+
+/* The Pink Bar below the text */
+.kinetic-bar {
+    width: 0;
+    height: 4px;
+    background: #ff2d95;
+    margin-top: 15px;
+    animation: growBar 1s ease-out 1s forwards; /* Grows after the slide finishes */
+}
+
+/* --- ANIMATIONS --- */
+@keyframes slideStraightAcross {
+    0% {
+        opacity: 0;
+        transform: translateX(-100vw);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Ends at its original position */
+    }
+}
+
+@keyframes growBar {
+    to { width: 80px; }
+}
+
+/*=====================================================
+ HEADER 
+ =====================================================*/
+/* CONTAINER --- */
+.kinetic-header {
+    padding: 60px 5%;
+    background: #000;
+}
+
+.kinetic-wrapper {
+    /* This vertical pink bar stays still */
+    border-left: 6px solid #ff2d95; 
+    padding-left: 25px;
+    position: relative;
+    overflow: hidden; /* Clips the text so it 'emerges' from the bar */
+}
+
+.kinetic-subtitle {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    color: #ff2d95;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    /* Subtitle stays still or has a very slight fade */
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* --- THE TEXT THAT MOVES STRAIGHT ACROSS --- */
+.kinetic-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 5rem;
+    margin: 5px 0 0 0;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    /* THE SLIDE ANIMATION */
+    transform: translateX(-100%); /* Starts hidden behind the left bar */
+    animation: textSlideAcross 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.kinetic-title span {
+    color: transparent;
+    -webkit-text-stroke: 1.5px #fff;
+}
+
+.kinetic-bar {
+    width: 80px;
+    height: 4px;
+    background: #ff2d95;
+    margin-top: 15px;
+}
+
+/*======================================================================= 
+ KEYFRAMES 
+=========================================================================*/
+@keyframes textSlideAcross {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/*================================================= 
+FOOTER 
+===================================================*/
+.xtreme-footer {
+    background: #000;
+    position: relative;
+    padding-top: 20px; /* Reduced from 60px */
+    margin-top: 60px;  /* Brought closer to the section above */
+    color: #fff;
+}
+
+/* The aggressive diagonal top edge - Made slightly shallower */
+.footer-top-slant {
+    position: absolute;
+    top: -30px; /* Reduced from -40px */
+    left: 0;
+    width: 100%;
+    height: 60px; /* Reduced from 80px */
+    background: #000;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+    border-top: 4px solid #d90000;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 10px 20px; /* Thinner padding */
+}
+
+.footer-main {
+    text-align: center;
+    padding-bottom: 20px; /* Reduced from 40px */
+}
+
+/* Big Bold Branding - PULLED UP HIGHER */
+.footer-logo-section {
+    margin-top: -60px; /* This pulls the logo UP into the slant */
+    position: relative;
+    z-index: 5;
+}
+
+.footer-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.8rem; /* Made slightly bigger since it's the hero now */
+    letter-spacing: -1px;
+    margin-bottom: 0px; 
+}
+
+.footer-logo span {
+    color: #d90000;
+    -webkit-text-stroke: 1px #d90000;
+}
+
+.footer-logo-section p {
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 4px;
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 15px; /* Reduced from 30px */
+}
+
+.footer-divider {
+    width: 40px; /* Smaller divider */
+    height: 3px;
+    background: #d90000;
+    margin: 0 auto 30px; /* Reduced from 50px */
+}
+
+/* 3-Column Info Grid - MORE COMPACT */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; /* Reduced from 40px */
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 20px; /* Reduced from 40px */
+}
+
+.footer-col h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    color: #d90000;
+    margin-bottom: 10px;
+}
+
+.footer-col p, .footer-col a {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; /* Slightly smaller text */
+    color: #aaa;
+    text-decoration: none;
+    line-height: 1.4;
+}
+
+/* Bottom Copyright Bar */
+.footer-bottom-bar {
+    padding: 15px 0; /* Reduced from 30px */
+    text-align: center;
+}
+
+.footer-bottom-bar p {
+    font-size: 0.7rem;
+    color: #444;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.footer-map {
+    margin-top: 15px;
+    border: 1px solid #1d1b1b; /* Dark border to match theme */
+    border-radius: 4px;
+    overflow: hidden;
+    filter: grayscale(100%) invert(90%) contrast(100%); /* Optional: Makes the map dark-themed */
+    transition: 0.3s;
+}
+
+.footer-map:hover {
+    filter: none; /* Map turns to full color on hover */
+}
+
+.footer-map iframe {
+    display: block;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.footer-socials a {
+    width: 38px;
+    height: 38px;
+    background: #111; /* Dark background */
+    border: 1px solid #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.footer-socials svg {
+    width: 18px; /* Perfectly sized inside the circle */
+    height: 18px;
+    fill: #fff; /* Icons start as white */
+    transition: fill 0.3s ease;
+}
+
+.footer-socials a:hover {
+    background: #000;
+    border-color: #d90000; /* Red border on hover */
+    transform: translateY(-3px);
+}
+
+.footer-socials a:hover svg {
+    fill: #d90000; /* Icons turn red on hover */
+}
+
+/* Clean Alignment for Hours Column */
+.hours-wrap p {
+    display: flex;
+    justify-content: space-between; /* Pushes time to the right */
+    border-bottom: 1px solid #111; /* Subtle divider */
+    padding-bottom: 5px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.hours-wrap p span:first-child {
+    color: #d90000; /* Red days */
+    font-weight: bold;
+}
+
+/* Ensure social icons are aligned left under the title */
+.footer-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    justify-content: center; /* Center them for the main-section feel */
+}
+
+/* Make sure the grid handles the center column correctly */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    align-items: start;
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .footer-socials {
+        justify-content: center;
+    }
+}

@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Training | Greg's Xtreme Fitness Centre</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@300;400;700&family=Roboto:wght@400;700&display=swap');
+
+        :root {
+            --red: #e63946;
+            --black: #000000;
+            --dark-grey: #0b0b0b;
+            --text-grey: #b0b0b0;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--dark-grey);
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 2000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+
+        /*===========================================================
+          NAVIGATION & DROPDOWN  
+        ============================================================*/
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+        :root {
+            --red: #ff0000;
+            --transition: all 0.3s ease;
+        }
+        
+        .xtreme-nav-header {
+            background: #000;
+            padding: 10px 0;
+            border-bottom: 2px solid #1a1a1a;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* This pushes Logo Left and Nav Right */
+            max-width: 100%;
+            padding: 0 50px;
+        }
+        
+        /* Ensure the nav-section doesn't grow and push the logo off-center */
+        .nav-section {
+            display: flex;
+            align-items: center;
+        }
+        
+        @media (max-width: 992px) {
+            .nav-container { padding: 0 20px; }
+            
+            .nav-section.right {
+                display: none; 
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #000;
+                flex-direction: column;
+                padding-bottom: 20px;
+            }
+        
+            .nav-container.mobile-active .nav-section.right {
+                display: flex;
+            }
+        }
+        /* --- NAVIGATION LINKS --- */
+        .main-nav {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .main-nav > li {
+            position: relative;
+        }
+        
+        .main-nav > li > a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            transition: var(--transition);
+            position: relative;
+            white-space: nowrap;
+            display: block;
+        }
+        
+        /* RED UNDERLINE EFFECT */
+        .main-nav > li > a::after {
+            content: '';
+            position: absolute;
+            bottom: 8px; /* Lifted slightly to look cleaner */
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background-color: var(--red);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .main-nav > li > a:hover::after,
+        .main-nav > li > a.active::after {
+            transform: scaleX(1);
+        }
+        
+        .main-nav > li > a:hover,
+        .main-nav > li > a.active {
+            color: var(--red);
+        }
+        
+        /* --- LOGO STYLING --- */
+        .logo-horizontal {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-main-row { 
+            display: flex; 
+            align-items: baseline; 
+            gap: 4px; 
+        }
+        
+        .gregs { 
+            color: var(--red); 
+            font-family: 'Times New Roman', serif; 
+            font-size: 1.8rem; 
+            font-weight: bold; 
+        }
+        
+        .x-accent { 
+            color: var(--red); 
+            font-family: Arial, sans-serif; 
+            font-size: 2.2rem; 
+            font-weight: 900; 
+            font-style: italic; 
+            line-height: 1; 
+        }
+        
+        .treme { 
+            color: #fff; 
+            font-family: 'Times New Roman', serif; 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+        }
+        
+        .swoosh-line { 
+            width: 100%; 
+            height: 3px; 
+            background: #8bc34a; 
+            margin: 2px 0; 
+            border-radius: 10px; 
+        }
+        
+        .logo-sub-row { 
+            color: #8bc34a; 
+            font-family: 'Oswald', sans-serif; 
+            font-size: 0.8rem; 
+            letter-spacing: 4px; 
+            text-align: center; 
+            font-weight: 700; 
+        }
+        
+        /* --- DROPDOWN LOGIC --- */
+        .dropdown { position: relative; }
+        
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 90%; /* Brought closer to the nav text */
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            min-width: 200px;
+            padding: 10px 0;
+            list-style: none;
+            border-top: 3px solid var(--red);
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+            z-index: 2100;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .dropdown-menu a {
+            padding: 12px 25px;
+            font-size: 13px;
+            color: #bbb;
+            display: block;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        
+        .dropdown-menu a:hover {
+            background: #111;
+            color: var(--red);
+            padding-left: 35px; /* Slide effect on hover */
+        }
+        
+        /* This creates an invisible bridge between the link and the menu */
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -20px; /* This covers the gap above the menu */
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: transparent; /* Invisible to the user */
+        }
+        
+        
+        /* --- DESKTOP VIEW (Default) --- */
+        @media (min-width: 993px) {
+            .mobile-menu-btn { display: none !important; }
+            .nav-section.right { display: flex !important; position: static !important; }
+        }
+        
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 992px) {
+            /* Explicitly override to show the button */
+            .mobile-menu-btn {
+                display: block !important; 
+                color: white;
+                font-size: 30px;
+                cursor: pointer;
+                padding: 10px;
+                z-index: 99999;
+                position: relative;
+            }
+        
+            .nav-section.right {
+                display: none; 
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #000;
+                flex-direction: column;
+                text-align: center;
+                padding: 20px 0;
+                border-top: 2px solid var(--red);
+                z-index: 9999;
+            }
+        
+            .nav-container.mobile-active .nav-section.right {
+                display: flex !important;
+            }
+        
+            .main-nav {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+
+
+        /*============================================================
+        HERO SECTION 
+        ============================================================*/
+        /* --- Creative Hero Notice Section --- */
+        .hero-section {
+            flex-grow: 1;
+            padding: 100px 20px 60px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('gym-texture.jpg'); /* Add a subtle texture image */
+            background-size: cover; background-attachment: fixed;
+        }
+
+        .hero-title {
+            color: var(--xtreme-red); font-size: 3.5rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: -1px;
+        }
+
+        .notice-box { 
+            max-width: 700px; padding: 50px; 
+            background: rgba(255,255,255,0.03); 
+            border-left: 5px solid var(--xtreme-red);
+            border-top: 1px solid rgba(255,255,255,0.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .notice-label { color: var(--xtreme-red); font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; text-transform: uppercase; }
+
+        /* The Main Action Button */
+        .agree-btn { 
+            display: inline-block; background-color: var(--xtreme-red); color: white; 
+            padding: 15px 40px; text-decoration: none; font-weight: bold; 
+            margin-top: 30px; border-radius: 4px; border: none; font-family: 'Oswald';
+            cursor: pointer; transition: 0.3s;
+        }
+        .agree-btn:hover { background-color: #ff0000; transform: scale(1.05); }
+
+        /* --- Interactive Popup Modal --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none; justify-content: center; align-items: center; z-index: 3000;
+        }
+
+        .modal-content {
+            background: var(--xtreme-dark-grey);
+            padding: 40px; text-align: center; max-width: 400px;
+            border: 2px solid var(--xtreme-red);
+            box-shadow: 0 0 30px rgba(204, 0, 0, 0.3);
+            animation: fadeInModal 0.3s;
+        }
+
+        .modal-title { color: white; margin-bottom: 25px; font-size: 1.5rem; }
+
+        .choice-btn {
+            display: block; width: 100%; background: none; border: 2px solid #333; color: #aaa;
+            padding: 15px; text-decoration: none; font-weight: bold; margin-bottom: 15px; 
+            transition: var(--transition); font-family: 'Oswald'; cursor: pointer;
+        }
+
+        .choice-btn:hover { border-color: var(--xtreme-red); color: white; background: rgba(204,0,0,0.1); }
+        .active-btn { border-color: var(--xtreme-red); background-color: var(--xtreme-red); color: white; }
+
+        @keyframes fadeInModal { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+        
+
+        
+       /* 1. Compact Hero Section */
+    .page-hero {
+        padding: 100px 20px 40px; /* Reduced vertical space */
+        text-align: center;
+        background: #000;
+        border-bottom: 1px solid #1a1a1a;
+    }
+
+    .hero-content {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* 2. Interactive Title */
+    .hero-title-main {
+        font-family: 'Oswald', sans-serif;
+        font-size: 3rem; /* Smaller size */
+        text-transform: uppercase;
+        color: white;
+        margin: 0;
+        transition: 0.4s;
+        cursor: default;
+        margin-top: -80px;
+    }
+
+    /* Hover Glow Effect */
+    .hero-title-main:hover {
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        color: var(--red);
+    }
+
+    /* 3. The 'Drawing' Line (Interactive Element) */
+    .accent-line {
+        height: 2px;
+        background: var(--red);
+        margin: 15px auto 0;
+        width: 0;
+        animation: drawLine 1.5s ease-out forwards;
+    }
+
+    @keyframes drawLine {
+        from { width: 0; }
+        to { width: 100px; }
+    }
+
+    .hero-title-accent {
+        display: block;
+        color: #666;
+        font-size: 0.8rem;
+        letter-spacing: 4px;
+        margin-top: 10px;
+        text-transform: uppercase;
+    }
+
+
+
+    /* 2. Slate Memo Notebook */
+    .memo-paper {
+        background: #1a1a1a; /* Dark Slate Grey */
+        color: #e0e0e0;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto 100px;
+        padding: 50px;
+        position: relative;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        border: 1px solid #333;
+    }
+
+    .memo-paper::after {
+        content: "";
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+        opacity: 0.3; pointer-events: none;
+    }
+
+    .stamp {
+        position: absolute; top: 20px; right: 20px;
+        border: 2px solid var(--red);
+        color: var(--red);
+        padding: 5px 10px;
+        font-family: 'Oswald';
+        font-weight: bold;
+        transform: rotate(10deg);
+        z-index: 2;
+    }
+
+    .memo-header {
+        font-family: 'Courier New', monospace;
+        color: var(--red);
+        border-bottom: 1px solid var(--red);
+        margin-bottom: 25px;
+        display: inline-block;
+    }
+
+    .memo-text p {
+        font-family: 'Georgia', serif;
+        line-height: 1.7;
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+    }
+
+    .agree-btn {
+        background: var(--red);
+        color: white;
+        width: 100%;
+        padding: 20px;
+        border: none;
+        cursor: pointer;
+        font-family: 'Oswald';
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 20px;
+        transition: 0.3s;
+    }
+
+    .agree-btn:hover { background: #ff0000; box-shadow: 0 0 20px var(--red); }
+
+
+        /* =============================================== 
+        FOOTER 
+        =================================================*/ 
+        /* XTREME INDUSTRIAL FOOTER */
+        .xtreme-footer {
+            background: #000;
+            position: relative;
+            padding-top: 20px; /* Reduced from 60px */
+            margin-top: -90px;  /* Brought closer to the section above */
+            color: #fff;
+        }
+
+        /* The aggressive diagonal top edge - Made slightly shallower */
+        .footer-top-slant {
+            position: absolute;
+            top: -30px; /* Reduced from -40px */
+            left: 0;
+            width: 100%;
+            height: 60px; /* Reduced from 80px */
+            background: #000;
+            clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+            border-top: 4px solid #d90000;
+        }
+
+        .footer-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 10px 20px; /* Thinner padding */
+            margin-top: 60px;
+        }
+
+        .footer-main {
+            text-align: center;
+            padding-bottom: 20px; /* Reduced from 40px */
+        }
+
+        /* Big Bold Branding - PULLED UP HIGHER */
+        .footer-logo-section {
+            margin-top: -60px; /* This pulls the logo UP into the slant */
+            position: relative;
+            z-index: 5;
+        }
+
+        .footer-logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.8rem; /* Made slightly bigger since it's the hero now */
+            letter-spacing: -1px;
+            margin-bottom: 0px; 
+        }
+
+        .footer-logo span {
+            color: #d90000;
+            -webkit-text-stroke: 1px #d90000;
+        }
+
+        .footer-logo-section p {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 4px;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 15px; /* Reduced from 30px */
+        }
+
+        .footer-divider {
+            width: 40px; /* Smaller divider */
+            height: 3px;
+            background: #d90000;
+            margin: 0 auto 30px; /* Reduced from 50px */
+        }
+
+        /* 3-Column Info Grid - MORE COMPACT */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px; /* Reduced from 40px */
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 20px; /* Reduced from 40px */
+        }
+
+        .footer-col h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            color: #d90000;
+            margin-bottom: 10px;
+        }
+
+        .footer-col p, .footer-col a {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem; /* Slightly smaller text */
+            color: #aaa;
+            text-decoration: none;
+            line-height: 1.4;
+        }
+
+        /* Bottom Copyright Bar */
+        .footer-bottom-bar {
+            padding: 15px 0; /* Reduced from 30px */
+            text-align: center;
+        }
+
+        .footer-bottom-bar p {
+            font-size: 0.7rem;
+            color: #444;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        .footer-map {
+            margin-top: 15px;
+            border: 1px solid #1d1b1b; /* Dark border to match theme */
+            border-radius: 4px;
+            overflow: hidden;
+            filter: grayscale(100%) invert(90%) contrast(100%); /* Optional: Makes the map dark-themed */
+            transition: 0.3s;
+        }
+
+        .footer-map:hover {
+            filter: none; /* Map turns to full color on hover */
+        }
+
+        .footer-map iframe {
+            display: block;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .footer-socials a {
+            width: 38px;
+            height: 38px;
+            background: #111; /* Dark background */
+            border: 1px solid #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .footer-socials svg {
+            width: 18px; /* Perfectly sized inside the circle */
+            height: 18px;
+            fill: #fff; /* Icons start as white */
+            transition: fill 0.3s ease;
+        }
+
+        .footer-socials a:hover {
+            background: #000;
+            border-color: #d90000; /* Red border on hover */
+            transform: translateY(-3px);
+        }
+
+        .footer-socials a:hover svg {
+            fill: #d90000; /* Icons turn red on hover */
+        }
+
+        /* Clean Alignment for Hours Column */
+        .hours-wrap p {
+            display: flex;
+            justify-content: space-between; /* Pushes time to the right */
+            border-bottom: 1px solid #111; /* Subtle divider */
+            padding-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .hours-wrap p span:first-child {
+            color: #d90000; /* Red days */
+            font-weight: bold;
+        }
+
+        /* Ensure social icons are aligned left under the title */
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+            justify-content: center; /* Center them for the main-section feel */
+        }
+
+        /* Make sure the grid handles the center column correctly */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* Mobile Fix */
+        @media (max-width: 768px) {
+            .footer-socials {
+                justify-content: center;
+            }
+        }
+
+        /* ==========================================================================
+        8. UTILITIES & ANIMATIONS
+        ========================================================================== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, 10px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .origin-container { flex-direction: column; text-align: center; }
+            .hero-content-cool h1 { font-size: 3.5rem; }
+            .card-stack { width: 280px; height: 400px; }
+            .pos-2 { transform: translate3d(40%, 0, -200px) scale(0.7); }
+            .pos-3 { transform: translate3d(-40%, 0, -200px) scale(0.7); }
+        }
+
+
+        /* Styling for the new Memo Layout */
+    .memo-card {
+        background: #0d0d0d;
+        border: 1px solid #222;
+        padding: 40px;
+        position: relative;
+    }
+
+    .memo-header-label {
+        color: var(--red);
+        font-family: 'Oswald', sans-serif;
+        font-size: 0.75rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .policy-grid {
+        display: grid;
+        gap: 20px;
+    }
+
+    .policy-item {
+        border-bottom: 1px solid #1a1a1a;
+        padding-bottom: 15px;
+    }
+
+    .policy-text {
+        color: #bbb;
+        font-size: 1.01rem;
+        line-height: 1.6;
+    }
+
+    .disclaimer-footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid var(--red);
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.98rem;
+    }
+
+     </style>
+</head>
+<body>
+
+<header class="xtreme-nav-header">
+    <nav class="nav-container">
+
+        <div class="nav-section left">
+            <a href="index.html" class="logo-horizontal">
+                <div class="logo-main-row">
+                    <span class="gregs">GREG'S</span>
+                    <span class="x-accent">X</span>
+                    <span class="treme">TREME</span>
+                </div>
+                <div class="swoosh-line"></div>
+                <div class="logo-sub-row">FITNESS CENTRE</div>
+            </a>
+        </div>
+
+        <div class="mobile-menu-btn">☰</div>
+
+        <div class="nav-section right">
+            <ul class="main-nav">
+                <li><a href="index.html">HOME</a></li>
+                <li class="dropdown">
+                    <a href="about.html" class="nav-link">
+                        ABOUT US <i class="fas fa-chevron-down" style="margin-left: 6px; font-size: 10px;"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="about.html">HISTORY</a></li>
+                        <li><a href="gallery.html">GALLERY</a></li>
+                        <li><a href="testimonials.html">TESTIMONIALS</a></li>
+                        <li><a href="code.html">CODE OF CONDUCT</a></li>
+                    </ul>
+                </li>
+                <li><a href="memberships.html">MEMBERSHIPS</a></li>
+                <li><a href="trainers.html" class= "active">PERSONAL TRAINING</a></li>
+                <li><a href="contact.html">CONTACT US</a></li>
+            </ul>
+        </div>
+
+    </nav>
+</header>
+
+
+
+<section class="page-hero">
+    <div class="hero-content">
+        <h1 class="hero-title-main">PERSONAL TRAINING</h1>
+        <div class="accent-line"></div>
+        <span class="hero-title-accent">Facility Policy & Notice</span>
+    </div>
+</section>
+
+<main class="hero-section" style="padding-top: 0;">
+    <div class="memo-paper">
+        <div class="stamp">OFFICIAL</div>
+        <h2 class="memo-header">NOTICE</h2>
+        <div class="memo-card">
+    <span class="memo-header-label">Facility Operations Policy</span>
+    
+    <div class="policy-grid">
+        <div class="policy-item">
+            <p class="policy-text"><strong>Greg's Xtreme Fitness Centre does not provide personal training or online coaching services.</strong></p>
+        </div>
+        
+        <div class="policy-item">
+            <p class="policy-text">We do, however, rent our facility space to independent, third-party trainers who wish to conduct their own sessions.</p>
+        </div>
+
+        <div class="policy-item">
+            <p class="policy-text">Please be aware that any arrangements, payments, or professional agreements you enter into with these external trainers are entirely at your own risk.</p>
+        </div>
+
+        <div class="policy-item">
+            <p class="policy-text"><strong>Greg’s Xtreme Fitness Centre assumes no liability</strong> for any professional services rendered by these individuals or for any disagreements, disputes, or issues that may arise between you and an independent contractor.</p>
+        </div>
+        
+        <div class="policy-item">
+            <p class="policy-text"><strong>We advise all members to use their own judgment and discretion when selecting and working with independent contractors.</strong></p>
+        </div>
+    </div>
+
+    <div class="disclaimer-footer">
+        By utilizing our facilities, you acknowledge and accept these terms.
+    </div>
+</div>
+        
+        <button id="agreeBtn" class="agree-btn">I ACKNOWLEDGE AND ACCEPT</button>
+
+        <div id="modalOverlay" class="modal-overlay">
+    <div class="modal-content">
+        <h2 class="modal-title">ACKNOWLEDGEMENT RECEIVED</h2>
+        <p style="color: #bbb; margin-bottom: 25px;">How would you like to proceed?</p>
+        
+        <a href="memberships.html" class="choice-btn">VIEW MEMBERSHIPS</a>
+        <a href="index.html" class="choice-btn">BACK TO HOME</a>
+        
+        <p style="color: #666; font-size: 0.7rem; margin-top: 20px;">
+            Click outside the box to return to this page.
+        </p>
+    </div>
+</div>
+
+    </div>
+</main>
+
+ <footer class="xtreme-footer">
+    <div class="footer-top-slant"></div>
+    <div class="footer-container">
+        <div class="footer-main">
+            <div class="footer-logo-section">
+                <h2 class="footer-logo">GREG'S <span>XTREME</span></h2>
+                <p>THE ULTIMATE TRAINING GROUND.</p>
+                <div class="footer-divider"></div>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>LOCATION</h4>
+                    <p>32 Brunswick Street,<br> Shop 15D, AJ's Shopping Complex <br> Spanish Town, St.Catherine, Jamaica</p>
+                    <div class="footer-map">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3794.525458366528!2d-76.96104836321905!3d18.000801804214724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb1326d35e9539%3A0x2daff9dd4a6b4c2!2sGreg&#39;s%20Extreme%20Fitness%20Center!5e0!3m2!1sen!2sus!4v1768754374151!5m2!1sen!2sus" 
+                            width="100%" 
+                            height="150" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>GET IN TOUCH</h4>
+                    <p>Phone: <a href="tel:+18766497318">+1 (876) 649-7318 </a></p>
+                    <p>Email: <a href="mailto:gregxf@hotmail.com">gregxf@hotmail.com</a></p>
+                    
+                    <h4 style="margin-top: 25px; margin-bottom: 10px;">FOLLOW US</h4>
+                    <div class="footer-socials">
+                        <a href="https://www.facebook.com/GregsXF" target="_blank" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/gregxf_" target="_blank" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        <a href="https://www.tiktok.com/@gregxf" target="_blank" aria-label="TikTok">
+                            <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.31-.75.42-1.24 1.25-1.31 2.1-.1.56-.03 1.12.18 1.64.39.88 1.47 1.39 2.4 1.18.96-.13 1.72-.94 1.94-1.87.12-.73.07-1.48.07-2.22V.02z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>HOURS</h4>
+                    <div class="hours-wrap">
+                        <p><span>Mon - Thurs:</span> <span>5AM - 10PM</span></p>
+                        <p><span>Fri:</span> <span>5AM - 5:30PM</span></p>
+                        <p><span>Sat:</span> <span>7PM - 10PM</span></p>
+                        <p><span>Sun:</span> <span>11AM - 3PM</span></p>
+                        <p><span>Public Holidays:</span> <span>5AM - 12PM</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <p>© 2026 GREG'S XTREME FITNESS CENTRE.ALL RIGHTS RESERVED.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Add interactivity for the Modal
+    const agreeBtn = document.getElementById('agreeBtn');
+    const modalOverlay = document.getElementById('modalOverlay');
+
+    agreeBtn.addEventListener('click', () => { modalOverlay.style.display = 'flex'; });
+
+    // Close the modal if clicking outside the content box
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) { modalOverlay.style.display = 'none'; }
+    });
+    document.getElementById('agreeBtn').onclick = () => document.getElementById('modalOverlay').style.display = 'flex';
+    window.onclick = (e) => { if(e.target == document.getElementById('modalOverlay')) document.getElementById('modalOverlay').style.display = 'none'; }
+
+
+    // Show modal when button is clicked
+    agreeBtn.addEventListener('click', () => {
+        modalOverlay.style.display = 'flex';
+    });
+
+    // Close modal when clicking outside the content
+    window.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            modalOverlay.style.display = 'none';
+        }
+    });
+
+     // Mobile Menu Toggle
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
+    const navContainer = document.querySelector('.nav-container');
+    
+    mobileBtn.addEventListener('click', (e) => {
+        // Stop the click from bubbling up to the document 
+        // so the document listener doesn't immediately close the menu
+        e.stopPropagation(); 
+        navContainer.classList.toggle('mobile-active');
+    });
+    
+    // Mobile Dropdown Toggle
+    document.querySelectorAll('.dropdown > a').forEach(trigger => {
+        trigger.addEventListener('click', function(e) {
+            if (window.innerWidth <= 992) {
+                e.preventDefault();
+                e.stopPropagation(); // Prevents the dropdown click from closing the whole menu
+                const subMenu = this.nextElementSibling;
+                if (subMenu) {
+                    const isVisible = subMenu.style.display === 'block';
+                    subMenu.style.display = isVisible ? 'none' : 'block';
+                }
+            }
+        });
+    });
+    
+    // Click anywhere else to close
+    document.addEventListener('click', function(event) {
+        const isMobileActive = navContainer.classList.contains('mobile-active');
+    
+        // Only run if the menu is actually open
+        if (isMobileActive) {
+            // Remove active class and reset dropdowns
+            navContainer.classList.remove('mobile-active');
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.style.display = 'none';
+            });
+        }
+    });
+
+</script>
+
+</body>
+</html>

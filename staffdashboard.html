@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Greg's Xtreme Fitness Centre</title>
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="staffdash.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>GREG<span>XTREME</span></h2>
+                <span class="suite-tag">Admin Dashboard</span>
+                <!-- Mobile Menu Close Icon -->
+                <button class="mobile-close-btn" onclick="toggleMobileSidebar()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <ul class="nav-links">
+                <li id="nav-home" class="active" onclick="showSection('home')">
+                    <i class="fas fa-home"></i> <span>Home</span>
+                </li>
+                <li id="nav-members" onclick="showSection('members')">
+                    <i class="fas fa-users"></i> <span>Memberships</span>
+                </li>
+                <!-- NEW: Short Term Memberships Navigation Link -->
+                <li id="nav-shortterm" onclick="showSection('shortterm')">
+                    <i class="fas fa-id-badge"></i> <span>Weekly/Daily</span>
+                </li>
+                <li id="nav-testimonials" onclick="showSection('testimonials')">
+                    <i class="fas fa-star"></i> <span>Reviews</span>
+                </li>
+                <li id="nav-inquiries" onclick="showSection('inquiries')">
+                    <i class="fas fa-envelope"></i> <span>Inquiries</span>
+                </li>
+                <li id="nav-management" onclick="showSection('management')">
+                    <i class="fas fa-tasks"></i> <span>Management</span>
+                </li> 
+                <li id="nav-settings" onclick="showSection('settings')">
+                    <i class="fas fa-cog"></i> <span>Settings</span>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="theme-switch">
+                    <span>Appearance</span>
+                    <button id="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+                </div>
+                <button onclick="window.location.href='staff-login.html'" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- MAIN WORKSPACE CONTENT -->
+        <main class="main-content">
+            
+            <!-- HEADER -->
+            <header class="content-header">
+                <div class="welcome-text">
+                    <button class="mobile-toggle-btn" onclick="toggleMobileSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1 id="section-title">Home Overview</h1>
+                        <p id="live-date">Fetching live sync status...</p>
+                    </div>
+                </div>
+                <!-- Universal Search/Filter Wrapper -->
+                <div class="search-container hidden" id="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="adminSearch" placeholder="Filter records..." onkeyup="filterTable()">
+                </div>
+            </header>
+
+            <!-- 1. HOME SECTION -->
+            <section id="home-section" class="admin-section">
+                <div class="status-grid">
+                    
+                    <!-- Standard Members Registry Card -->
+                    <div class="status-card" onclick="showSection('members')">
+                        <div class="card-icon"><i class="fas fa-user-plus"></i></div>
+                        <div class="card-details">
+                            <h3>MEMBERSHIPS</h3>
+                            <p id="member-stat">Syncing...</p>
+                        </div>
+                        <div id="new-signup-badge" class="notif-badge hidden">NEW</div>
+                    </div>
+
+                    <!-- NEW: Short-Term Membership Passes Card -->
+                    <div class="status-card" onclick="showSection('shortterm')">
+                        <div class="card-icon pass-icon"><i class="fas fa-id-badge"></i></div>
+                        <div class="card-details">
+                            <h3>DAILY/WEEKLY</h3>
+                            <p id="shortterm-stat">Syncing...</p>
+                        </div>
+                    </div>
+
+                    <!-- Inquiries Card -->
+                    <div class="status-card" onclick="showSection('inquiries')">
+                        <div class="card-icon msg-icon"><i class="fas fa-comment-alt"></i></div>
+                        <div class="card-details">
+                            <h3>Inquiries</h3>
+                            <p id="inquiry-stat">Checking...</p>
+                        </div>
+                        <div id="msg-count-badge" class="notif-count hidden">0</div>
+                    </div>
+
+                    <!-- Reviews Card -->
+                    <div class="status-card full-width-card" onclick="showSection('testimonials')">
+                        <div class="card-icon star-icon"><i class="fas fa-award"></i></div>
+                        <div class="card-details">
+                            <h3>Member Reviews & Testimonials</h3>
+                            <p id="review-stat">Checking...</p>
+                        </div>
+                        <div id="review-alert-badge" class="notif-dot hidden"></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-lower-grid">
+                    
+                    <!-- Notice Board (Classes, Personal Trainers, Routines) -->
+                    <div class="content-card notice-board">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bullhorn"></i> Upcoming Events & Classes</h3>
+                            <button class="add-btn" onclick="showSection('management')"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="notice-list" id="notice-list">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="side-panel-grid">
+                        
+                        <!-- Quick Actions Panel -->
+                        <div class="content-card quick-actions">
+                            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                            <div class="action-buttons">
+                                <button onclick="showSection('members')"><i class="fas fa-user-check"></i> Verify Member</button>
+                                <button onclick="showSection('shortterm')"><i class="fas fa-user-check"></i> Short-Term Members</button>
+                                <button onclick="showSection('management')"><i class="fas fa-image"></i> App Banner</button>
+                                <button id="gym-status-btn" onclick="toggleGymStatus()"><i class="fas fa-door-open"></i> Toggle Gym Status</button>
+                            </div>
+                        </div>
+
+                        <!-- Staff To-Do List -->
+                        <div class="content-card daily-status">
+                            <h3><i class="fas fa-check-circle"></i> Staff To-Do</h3>
+                            <ul class="task-list" id="todo-list-display">
+                                <!-- Populated by JavaScript -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. MEMBERS REGISTRY SECTION (WITH RECEIPT REF) -->
+            <section id="members-section" class="admin-section hidden">
+                <div class="table-card">
+                    <div class="table-header-row">
+                        <div class="table-title-area">
+                            <h2>MEMBERSHIP SIGNUPS </h2>
+                            <p>Full database of standard subscription members.</p>
+                        </div>
+                        <button class="primary-btn" onclick="showAddMemberForm()"><i class="fas fa-plus"></i> Add New Member</button>
+                    </div>
+
+                    <!-- Member Form -->
+                    <div id="add-member-form-container" class="inline-form-box hidden">
+                        <h3>Create New Member Profile</h3>
+                        <div class="form-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                            <input type="text" id="member-first-name" placeholder="First Name *" required>
+                            <input type="text" id="member-last-name" placeholder="Last Name *" required>
+                            <input type="email" id="member-email" placeholder="Email Address">
+                            <input type="tel" id="member-phone" placeholder="Phone Number">
+                            <input type="date" id="member-dob" placeholder="Date of Birth">
+                            <input type="text" id="member-address" placeholder="Street Address">
+                            <input type="text" id="member-parish" placeholder="Parish">
+                            <input type="text" id="member-plan" placeholder="Membership Plan *" required>
+                            <input type="text" id="member-payment" placeholder="Payment Method">
+                            <input type="text" id="member-receipt" placeholder="Receipt Ref *" required>
+                            <hr style="grid-column: span 2;">
+                            <input type="text" id="member-ec-first" placeholder="Emergency First Name">
+                            <input type="text" id="member-ec-last" placeholder="Emergency Last Name">
+                            <input type="text" id="member-ec-rel" placeholder="Emergency Relationship">
+                            <input type="tel" id="member-ec-phone" placeholder="Emergency Phone">
+                        </div>
+                        <div class="form-actions" style="margin-top: 15px;">
+                            <button onclick="saveNewMember()" class="save-btn">Save Record</button>
+                            <button onclick="hideAddMemberForm()" class="cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Registered</th> 
+                                    <th>Identity</th>
+                                    <th>Plan</th>
+                                    <th class="accent-header">Receipt Ref</th>
+                                    <th>Address</th>
+                                    <th>Emergency Contact</th>
+                                    <th>Staff Notes</th> 
+                                    <th class="action-header">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="member-data">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+            </section>
+
+            <!-- 3. NEW: SHORT-TERM MEMBERSHIPS SECTION -->
+            <section id="shortterm-section" class="admin-section hidden">
+                <div class="table-card">
+                    <div class="table-header-row">
+                        <div class="table-title-area">
+                            <h2>DAILY AND WEEKLY SIGNUPS</h2>
+                            <p>Manage temporary access passes, guests, and visitor check-ins.</p>
+                        </div>
+                        <button class="primary-btn accent-btn" onclick="showAddShortTermForm()"><i class="fas fa-plus"></i> Add Guest Pass</button>
+                    </div>
+
+                    <!-- Guest Pass Form -->
+                    <div id="add-shortterm-form-container" class="inline-form-box hidden">
+                        <h3>Create / Edit Short-Term Guest Pass</h3>
+                        <div class="form-grid">
+                            <input type="text" id="short-name" placeholder="Guest / Visitor Name *" required>
+                            <select id="short-type">
+                                <option value="Day Pass">Day Pass</option>
+                                <option value="3-Day Pass">3-Day Pass</option>
+                                <option value="Weekly Pass">Weekly Pass</option>
+                                <option value="Special Guest Pass">Special Guest Pass</option>
+                            </select>
+                            <input type="text" id="short-receipt" placeholder="Receipt Ref (e.g. RXF-ST-201) *" required>
+                            <input type="date" id="short-expiry" required>
+                            <input type="text" id="short-contact" placeholder="Contact Detail *" required>
+                            <input type="text" id="short-notes" placeholder="Remarks / Purpose">
+                        </div>
+                        <div class="form-actions">
+                            <button onclick="saveShortTermMember()" class="save-btn">Save Pass</button>
+                            <button onclick="hideAddShortTermForm()" class="cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Paid</th>
+                                    <th>Identity</th>
+                                    <th>Pass Type</th>
+                                    <th class="accent-header">Receipt Ref</th>
+                                    <th>Contact Details</th>
+                                    <th>Payment Method</th>
+                                    <th>Notes / Remarks</th>
+                                    <th class="action-header">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="shortterm-data">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. REVIEWS & TESTIMONIALS SECTION -->
+            <section id="testimonials-section" class="admin-section hidden">
+                <div class="table-card">
+                    <div class="table-header-row">
+                        <div class="table-title-area">
+                            <h2>Customer Reviews</h2>
+                            <p>Approve or manage member feedback for display on the public site.</p>
+                        </div>
+                    </div>
+                    <div class="table-responsive-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Member</th>
+                                    <th>Rating</th>
+                                    <th>Review Content</th>
+                                    <th class="action-header">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="testimonial-data">
+                                <tr>
+                                    <td colspan="5" style="text-align:center;">Loading reviews...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. INQUIRIES SECTION -->
+            <section id="inquiries-section" class="admin-section hidden">
+                <div class="table-card">
+                    <div class="table-header-row">
+                        <div class="table-title-area">
+                            <h2>Inquiries Inbox</h2>
+                            <p>Manage queries submitted from the website contact portals.</p>
+                        </div>
+                    </div>
+                    <div class="table-responsive-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Identity</th>
+                                    <th>Phone Number</th>
+                                    <th>Message</th>
+                                    <th>Staff Notes</th>
+                                    <th class="action-header">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inquiry-data-body">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. MANAGEMENT SECTION -->
+            <section id="management-section" class="admin-section hidden">
+                <div class="dashboard-lower-grid cols-equal">
+                    
+                    <!-- App Banner Controller -->
+                    <div class="content-card banner-controller">
+                        <h3><i class="fas fa-image"></i> App Banner Controller</h3>
+                        <p class="section-desc">Upload a promotional flyer to appear on the user homepage dashboard.</p>
+                        
+                        <div class="input-group">
+                            <label>Select Flyer Image</label>
+                            <input type="file" id="banner-upload" accept="image/*">
+                        </div>
+                        
+                        <div class="button-group">
+                            <button class="primary-btn" onclick="uploadBanner()">Upload & Push Live</button>
+                            <button class="logout-btn inline-btn" onclick="toggleBanner(false)">Disable Current</button>
+                        </div>
+                        
+                        <div id="banner-preview-area" class="preview-area">
+                            <p class="preview-label">Current Live Banner Preview:</p>
+                            <img id="current-banner-preview" src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1000&auto=format&fit=crop" alt="Flyer Banner">
+                        </div>
+                    </div>
+
+                    <div class="side-panel-grid">
+                        
+                        <!-- To-Do List Editor -->
+                        <div class="content-card">
+                            <h3><i class="fas fa-check-double"></i> To-Do List Editor</h3>
+                            <div class="input-group row-group">
+                                <input type="text" id="todo-input" placeholder="New staff task...">
+                                <button class="primary-btn" onclick="addNewTodo()">Add Task</button>
+                            </div>
+                            <div id="manage-todo-list" class="managed-list">
+                                <!-- Populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Announcement Manager -->
+                        <div class="content-card">
+                            <h3><i class="fas fa-bullhorn"></i> Announcement Manager</h3>
+                            <p class="section-desc">Manage timetables for Step, Aerobics, Circuit, or Dance class schedules.</p>
+                            <div class="input-group row-group">
+                                <input type="text" id="notice-input" placeholder="Event title or trainer detail...">
+                                <button class="primary-btn" onclick="addNewNotice()">Post Notice</button>
+                            </div>
+                            <div id="manage-notices-list" class="managed-list">
+                                <!-- Populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 7. SYSTEM SETTINGS SECTION -->
+            <section id="settings-section" class="admin-section hidden">
+                <div class="content-card system-card">
+                    <h3>System Settings</h3>
+                    <p class="section-desc">Administrative configurations and system integrations.</p>
+                    
+                    <div class="settings-credentials-box">
+                        <h4>Supabase Database Config Credentials</h4>
+                        <div class="input-fields">
+                            <div class="field">
+                                <label>Project API Key</label>
+                            </div>
+                            <div class="field">
+                                <label>Database Reference URL</label>
+                                <input type="text" value="https://gregxtreme.supabase.co" readonly>
+                            </div>
+                        </div>
+                        <button onclick="alert('Connection settings live and ready!')" class="primary-btn">Test Connection</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Script connection -->
+    <script src="staffdash.js"></script>
+</body>
+</html>

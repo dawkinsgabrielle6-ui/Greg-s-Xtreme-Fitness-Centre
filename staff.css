@@ -1,0 +1,218 @@
+:root {
+    --primary: #ff0000;
+    --dark: #0a0a0a;
+    --glass: rgba(255, 255, 255, 0.05);
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Montserrat', sans-serif; }
+
+.portal-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background: var(--dark);
+}
+
+/* Hero Side */
+.portal-hero {
+    flex: 1.2;
+    background-image: url(Images/chest.jpeg); /* Dynamic Fitness Photo */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.2), var(--dark));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.hero-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 5rem;
+    color: white;
+}
+
+.hero-logo span { color: var(--primary); }
+
+/* Login Side */
+.portal-login-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+.exit-btn {
+    position: absolute;
+    top: -60px;
+    right: 0;
+    color: #555;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+
+.exit-btn:hover { 
+    color: var(--primary); 
+    transform: rotate(90deg); 
+}
+
+h2 { 
+    font-family: 'Oswald'; 
+    font-size: 2.5rem; 
+    letter-spacing: 2px; 
+    margin-bottom: 5px; 
+    color: white; 
+}
+
+.subtitle { 
+    color: #888; 
+    margin-bottom: 30px; 
+    font-size: 0.9rem; 
+}
+
+/* Inputs */
+.input-group { margin-bottom: 20px; }
+.input-group label { 
+    display: block; 
+    color: #bbb; 
+    font-size: 0.8rem; 
+    text-transform: uppercase; 
+    margin-bottom: 8px; 
+    font-weight: bold; 
+}
+
+.input-field {
+    position: relative;
+    background: var(--glass);
+    border: 1px solid #333;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.input-field:focus-within { border-color: var(--primary); background: rgba(255,0,0,0.05); }
+
+.input-field i { padding: 0 15px; color: #555; }
+.input-field input {
+    background: transparent;
+    border: none;
+    padding: 15px 0;
+    color: white;
+    width: 100%;
+    outline: none;
+}
+
+.view-toggle {
+    background: none;
+    border: none;
+    color: #555;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+.forgot-link {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 0.7rem;
+    margin-top: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Button */
+.auth-btn {
+    width: 100%;
+    padding: 18px;
+    background: var(--primary);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-family: 'Oswald';
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.auth-btn:hover { background: #cc0000; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,0,0,0.2); }
+
+.pin-trap {
+    border: 1px dashed var(--primary);
+    padding: 15px;
+    border-radius: 8px;
+    background: rgba(255,0,0,0.05);
+}
+
+.error-banner {
+    margin-top: 20px;
+    padding: 12px;
+    background: rgba(255,0,0,0.1);
+    border-left: 4px solid var(--primary);
+    color: #ff8888;
+    font-size: 0.85rem;
+}
+
+.hidden { display: none; }
+
+/* --- FOOTER STYLES --- */
+footer {
+    background: #000;
+    border-top: 1px solid #111;
+}
+
+.footer-bottom-bar {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-bottom-bar p {
+    font-size: 0.7rem;
+    color: #555;
+    letter-spacing: 1px;
+    margin: 0;
+    font-family: 'Oswald';
+    text-transform: uppercase;
+}
+
+/* Ensure the drawer is styled for your industrial aesthetic */
+.mobile-menu-drawer {
+    background: #000; /* Or your dark theme color */
+    border-bottom: 2px solid #ff4500; /* Xtreme accent color */
+    padding: 20px;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Hide drawer by default on desktop if needed */
+@media (min-width: 769px) {
+    .mobile-menu-btn, .mobile-menu-drawer {
+        display: none !important;
+    }
+}

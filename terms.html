@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <title>Terms & Conditions | Greg's Xtreme Fitness Centre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0a0a0a; /* Deep charcoal/black */
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000000 100%);
+            color: #ffffff;
+            padding: 20px;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            color: #c8102e;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        h2 {
+            font-family: 'Oswald', sans-serif;
+            color: #ffffff;
+            margin-top: 35px;
+            border-left: 5px solid #c8102e;
+            padding-left: 15px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        /* Highlighting Key Terms */
+        .highlight {
+            color: #ff2e4d; /* Bright Action Red */
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        p, li {
+            margin-bottom: 15px;
+            color: #d1d1d1;
+            transition: color 0.3s ease;
+        }
+
+        /* Interactive List Items */
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 15px;
+            border-radius: 6px;
+            border-left: 2px solid transparent;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        ul li:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-left: 2px solid #c8102e;
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            background: rgba(20, 20, 20, 0.95);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(200, 16, 46, 0.1);
+            border: 1px solid #222;
+        }
+
+        .agree-btn {
+            display: block;
+            width: 300px;
+            margin: 30px auto 10px;
+            padding: 18px;
+            background-color: #a3142c;
+            color: #fff;
+            border: none;
+            border-radius: 50px; /* Rounded for a modern CTA look */
+            font-family: 'Oswald', sans-serif;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(200, 16, 46, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .agree-btn:hover {
+            background-color: #e61234;
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(200, 16, 46, 0.6);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: -80px;
+            padding: 40px 20px;
+            background: #000;
+        }
+
+        .footer-bottom-bar p {
+            font-size: 0.85rem;
+            color: #666;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Progress Bar for readability focus */
+        .scroller-hint {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #444;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 25px; margin: 20px auto; }
+            h1 { font-size: 2.2rem; }
+            .agree-btn { width: 100%; }
+        }
+
+        /* Ensure the drawer is styled for your industrial aesthetic */
+        .mobile-menu-drawer {
+            background: #000; /* Or your dark theme color */
+            border-bottom: 2px solid #ff4500; /* Xtreme accent color */
+            padding: 20px;
+            position: absolute;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Hide drawer by default on desktop if needed */
+        @media (min-width: 769px) {
+            .mobile-menu-btn, .mobile-menu-drawer {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Terms & Conditions</h1>
+
+        <h2>1. Membership Eligibility</h2>
+        <p>Membership is open to individuals aged 12 and above. Minors require parental/guardian consent.</p>
+
+        <h2>2. Registration & Payment</h2>
+        <ul>
+            <li>All memberships must be paid in full according to the chosen plan.</li>
+            <li>Memberships <span class="highlight">cannot be frozen</span> unless the member has a 3-month, 6-month, or yearly plan.</li>
+        </ul>
+
+        <h2>3. Health & Safety</h2>
+        <ul>
+            <li>Members must consult a physician before starting any exercise program.</li>
+            <li>Members assume <span class="highlight">full responsibility</span> for their health and safety while using gym equipment.</li>
+        </ul>
+
+        <h2>4. Gym Conduct & Rules</h2>
+        <ul>
+            <li>Respectful behavior is required toward staff and other members.</li>
+            <li>Harassment, violence, or misconduct may result in <span class="highlight">immediate membership termination</span>.</li>
+            <li>The gym reserves the right to refuse entry or cancel memberships for rule violations.</li>
+        </ul>
+
+        <h2>5. Use of Facilities</h2>
+        <ul>
+            <li><strong>Members must use equipment responsibly and return weights after use.</strong></li>
+            <li><span class="highlight">NO Crocs, slippers, or slides</span> allowed inside the gym.</li>
+            <li><span class="highlight">ONLY Sneakers</span> are allowed to work out in.</li>
+            <li>Personal belongings should be stored in the <strong>cubby holes provided</strong>; the gym is not responsible for lost or stolen items.</li>
+            <li>Smoking, alcohol, or illegal substances are <span class="highlight">strictly prohibited</span>.</li>
+        </ul>
+
+        <h2>6. Liability Waiver</h2>
+        <p>By signing up, members release the gym from any liability for injuries, accidents, or losses sustained while on the premises.</p>
+
+        <h2>7. Privacy & Personal Data</h2>
+        <p>Member information will be used solely for gym-related communications and promotions and will not be shared with third parties without consent, except as required by law.</p>
+
+        <h2>8. Termination of Membership</h2>
+        <p>Members may cancel their membership with notice. The gym may terminate memberships for non-payment, misconduct, or health/safety violations.</p>
+
+        <h2>9. Changes to Terms</h2>
+        <p>The gym reserves the right to amend these terms at any time. Updated terms will be communicated via email or posted in the gym.</p>
+
+        <h2>10. Agreement</h2>
+        <p>By signing up, members acknowledge that they have read, understood, and agreed to these Terms and Conditions.</p>
+
+        <p style="text-align:center; font-weight:700; margin-top:40px; color: #fff; font-size: 1.1rem;">
+            Thank you for choosing Greg's Xtreme Fitness Center!<br>
+            <span style="color: #c8102e; font-family: 'Oswald';">TAKING YOUR FITNESS TO THE NEXT LEVEL.</span>
+        </p>
+
+        <a href="signup-full.html?agreed=true" class="agree-btn">I Agree & Continue</a>
+        <p class="scroller-hint">Please read all sections before proceeding.</p>
+    </div>
+
+    <footer>
+        <div class="footer-bottom-bar">
+            <p>© 2026 GREG'S XTREME FITNESS CENTRE. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('menuToggle');
+    const menuDrawer = document.getElementById('mobileMenu');
+
+    if (menuBtn && menuDrawer) {
+        menuBtn.addEventListener('click', () => {
+            // Check current display state and toggle
+            if (menuDrawer.style.display === 'none' || menuDrawer.style.display === '') {
+                menuDrawer.style.display = 'block';
+                menuBtn.setAttribute('aria-expanded', 'true');
+            } else {
+                menuDrawer.style.display = 'none';
+                menuBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+});
+    </script>
+
+</body>
+</html>

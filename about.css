@@ -1,0 +1,899 @@
+/* ==========================================================================
+   1. GLOBAL SETTINGS & VARIABLES
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@300;400;700&family=Roboto:wght@400;700&display=swap');
+
+:root {
+    --red: #e63946;
+    --black: #000000;
+    --dark-grey: #0b0b0b;
+    --text-grey: #b0b0b0;
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--dark-grey);
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   2. NAVIGATION & DROPDOWN
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+:root {
+    --red: #ff0000;
+    --transition: all 0.3s ease;
+}
+
+.xtreme-nav-header {
+    background: #000;
+    padding: 10px 0;
+    border-bottom: 2px solid #1a1a1a;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* This pushes Logo Left and Nav Right */
+    max-width: 100%;
+    padding: 0 50px;
+}
+
+/* Ensure the nav-section doesn't grow and push the logo off-center */
+.nav-section {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 992px) {
+    .nav-container { padding: 0 20px; }
+    
+    .nav-section.right {
+        display: none; 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000;
+        flex-direction: column;
+        padding-bottom: 20px;
+    }
+
+    .nav-container.mobile-active .nav-section.right {
+        display: flex;
+    }
+}
+/* --- NAVIGATION LINKS --- */
+.main-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav > li {
+    position: relative;
+}
+
+.main-nav > li > a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    transition: var(--transition);
+    position: relative;
+    white-space: nowrap;
+    display: block;
+}
+
+/* RED UNDERLINE EFFECT */
+.main-nav > li > a::after {
+    content: '';
+    position: absolute;
+    bottom: 8px; /* Lifted slightly to look cleaner */
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background-color: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.main-nav > li > a:hover::after,
+.main-nav > li > a.active::after {
+    transform: scaleX(1);
+}
+
+.main-nav > li > a:hover,
+.main-nav > li > a.active {
+    color: var(--red);
+}
+
+/* --- LOGO STYLING --- */
+.logo-horizontal {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-main-row { 
+    display: flex; 
+    align-items: baseline; 
+    gap: 4px; 
+}
+
+.gregs { 
+    color: var(--red); 
+    font-family: 'Times New Roman', serif; 
+    font-size: 1.8rem; 
+    font-weight: bold; 
+}
+
+.x-accent { 
+    color: var(--red); 
+    font-family: Arial, sans-serif; 
+    font-size: 2.2rem; 
+    font-weight: 900; 
+    font-style: italic; 
+    line-height: 1; 
+}
+
+.treme { 
+    color: #fff; 
+    font-family: 'Times New Roman', serif; 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+}
+
+.swoosh-line { 
+    width: 100%; 
+    height: 3px; 
+    background: #8bc34a; 
+    margin: 2px 0; 
+    border-radius: 10px; 
+}
+
+.logo-sub-row { 
+    color: #8bc34a; 
+    font-family: 'Oswald', sans-serif; 
+    font-size: 0.8rem; 
+    letter-spacing: 4px; 
+    text-align: center; 
+    font-weight: 700; 
+}
+
+/* --- DROPDOWN LOGIC --- */
+.dropdown { position: relative; }
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 90%; /* Brought closer to the nav text */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #000;
+    min-width: 200px;
+    padding: 10px 0;
+    list-style: none;
+    border-top: 3px solid var(--red);
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+    z-index: 2100;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    padding: 12px 25px;
+    font-size: 13px;
+    color: #bbb;
+    display: block;
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.dropdown-menu a:hover {
+    background: #111;
+    color: var(--red);
+    padding-left: 35px; /* Slide effect on hover */
+}
+
+/* This creates an invisible bridge between the link and the menu */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -20px; /* This covers the gap above the menu */
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: transparent; /* Invisible to the user */
+}
+
+
+/* --- DESKTOP VIEW (Default) --- */
+@media (min-width: 993px) {
+    .mobile-menu-btn { display: none !important; }
+    .nav-section.right { display: flex !important; position: static !important; }
+}
+
+/* --- MOBILE VIEW --- */
+@media (max-width: 992px) {
+    /* Explicitly override to show the button */
+    .mobile-menu-btn {
+        display: block !important; 
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 99999;
+        position: relative;
+    }
+
+    .nav-section.right {
+        display: none; 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000;
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 0;
+        border-top: 2px solid var(--red);
+        z-index: 9999;
+    }
+
+    .nav-container.mobile-active .nav-section.right {
+        display: flex !important;
+    }
+
+    .main-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+/* ==========================================================================
+   3. ABOUT US COOL HEADER
+   ========================================================================== */
+/* --- KINETIC HEADER STYLE --- */
+.kinetic-header {
+    min-height: 30vh; /* Use min-height so it can grow if needed */
+    background: #151515;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;    /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    position: relative;
+    overflow: hidden;
+    
+    /* Remove the fixed padding-top that was pushing everything down */
+    padding: 40px 20px; 
+    
+    /* If you need space for a fixed nav, use margin instead of padding */
+    margin-top: 0px; 
+}
+
+/* Scrolling Watermark Background */
+.bg-scrolling-text {
+    position: absolute;
+    white-space: nowrap;
+    font-family: 'Oswald', sans-serif;
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.02); /* Very faint */
+    z-index: 1;
+    animation: marquee 90s linear infinite;
+    user-select: none;
+}
+
+.outline-txt {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Main Content Styling */
+.kinetic-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.glitch-reveal {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(3rem, 10vw, 6rem); /* Responsive size so it doesn't break small screens */
+    line-height: 1.5; /* Prevents invisible space above/below letters */
+    letter-spacing: -2px;
+    margin: 0;
+    color: #fff;
+}
+
+/* Interactive Slogan with Flipping Text */
+.interactive-slogan {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1.5rem;
+    color: #888;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: -10px;
+}
+
+.flip-text {
+    height: 1.8rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.flip-item {
+    display: block;
+    color: var(--red);
+    font-weight: 700;
+    animation: flipLoop 9s infinite;
+}
+
+@keyframes flipLoop {
+    0%, 25% { transform: translateY(0); }
+    33%, 58% { transform: translateY(-100%); }
+    66%, 91% { transform: translateY(-200%); }
+    100% { transform: translateY(0); }
+}
+
+.red-energy-bar {
+    width: 0;
+    height: 4px;
+    background: var(--red);
+    margin: 20px auto;
+    transition: width 0.6s ease;
+    margin-top: -3px;
+}
+
+.kinetic-header:hover .red-energy-bar {
+    width: 150px;
+}
+
+/* Glitch Effect on Hover */
+.glitch-reveal:hover {
+    text-shadow: 2px 0 var(--red), -2px 0 #fff;
+}
+
+
+/* ==========================================================================
+   4. ORIGIN STORY (SPLIT LAYOUT)
+   ========================================================================== */
+.origin-split {
+    padding: 100px 5%;
+    background: var(--dark-grey);
+}
+
+.origin-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 60px;
+    align-items: center;
+}
+
+.origin-image {
+    flex: 1;
+    position: relative;
+}
+
+.origin-image img {
+    width: 100%;
+    border-radius: 4px;
+    border-left: 6px solid var(--red);
+    filter: grayscale(30%);
+}
+
+.est-badge {
+    position: absolute;
+    top: -20px; left: -20px;
+    background: var(--red);
+    padding: 12px 25px;
+    font-family: 'Oswald';
+    font-weight: bold;
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
+}
+
+.origin-text { flex: 1.2; }
+
+.outline-h2 {
+    font-family: 'Oswald';
+    font-size: 3.5rem;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+.outline-h2 span { color: var(--red); }
+
+.origin-text p {
+    font-size: 1.1rem;
+    color: var(--text-grey);
+    margin-bottom: 20px;
+}
+
+/* ==========================================================================
+   5. CIRCULAR 3D HISTORY CARDS
+   ========================================================================== */
+.history-interact {
+    padding: 120px 0;
+    background: #000;
+    perspective: 2000px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.interact-title {
+    font-family: 'Oswald';
+    font-size: 3rem;
+    margin-bottom: 80px;
+    text-transform: uppercase;
+    margin-top: -80px;
+
+}
+
+.interact-title span { color: var(--red); }
+
+.card-stack {
+    position: relative;
+    width: 340px;
+    height: 480px;
+    margin: 0 auto;
+    transform-style: preserve-3d;
+}
+
+.history-card {
+    position: absolute;
+    width: 100%; height: 100%;
+    background: #111;
+    border: 2px solid #222;
+    border-radius: 24px;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    backface-visibility: hidden;
+    will-change: transform;
+    pointer-events: auto;
+}
+
+.card-thumb {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    margin-top: auto;
+    border-radius: 12px;
+    filter: grayscale(100%);
+    transition: 0.5s;
+}
+
+.history-card h3 {
+    font-family: 'Oswald';
+    font-size: 1.8rem;
+    color: var(--red);
+    margin: 20px 0 10px;
+}
+
+.history-card p {
+    font-family: 'Inter';
+    font-size: 0.95rem;
+    color: #aaa;
+}
+
+/* Carousel Logic Positions */
+.pos-1 { 
+    z-index: 10; 
+    transform: translate3d(0, 0, 0) rotateY(0deg) scale(1.1); 
+    opacity: 1; 
+    border-color: var(--red);
+    box-shadow: 0 25px 60px rgba(217, 0, 0, 0.3);
+}
+.pos-1 .card-thumb { filter: grayscale(0%); }
+
+/* Inactive Cards - Adjusted offsets to keep them visible but smaller */
+.pos-2 { 
+    z-index: 5; 
+    transform: translate3d(85%, 0, -200px) rotateY(-25deg) scale(0.7); 
+    opacity: 0.5; 
+    filter: blur(2px);
+}
+
+.pos-3 { 
+    z-index: 5; 
+    transform: translate3d(-85%, 0, -200px) rotateY(25deg) scale(0.7); 
+    opacity: 0.5; 
+    filter: blur(2px);
+}
+
+.card-year {
+    position: absolute;
+    top: 20px; right: 25px;
+    font-family: 'Oswald';
+    font-size: 4rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.03);
+}
+
+.tap-hint { 
+    margin-top: 100px; 
+    color: #444; 
+    text-transform: uppercase; 
+    letter-spacing: 3px; 
+    font-size: 0.8rem; 
+}
+
+/* Expanded state: cards align in a row or grid instead of stacked */
+.card-stack.is-expanded {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card-stack.is-expanded .history-card {
+    position: relative; /* Remove absolute positioning */
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    width: 300px;
+    height: 450px;
+}
+
+.view-all-btn {
+    display: block;
+    margin: 30px auto 0;
+    padding: 10px 25px;
+    background: transparent;
+    color: var(--red);
+    border: 2px solid var(--red);
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Oswald';
+    transition: 0.3s;
+    margin-top: 25px;
+}
+
+.view-all-btn:hover {
+    background: var(--red);
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    /* Reduce the active card scale for mobile so it fits the screen */
+    .pos-1 { 
+        transform: translate3d(0, 0, 0) rotateY(0deg) scale(1.0) !important; 
+    }
+
+    /* Shrink the stack width for small screens */
+    .card-stack {
+        width: 90vw; /* Fits 90% of the viewport width */
+        height: 400px;
+    }
+
+    /* Optionally hide or adjust the inactive cards so they don't crowd the view */
+    .pos-2, .pos-3 {
+        transform: translate3d(0, 0, -300px) rotateY(0deg) scale(0.8) !important;
+        opacity: 0.3;
+    }
+}
+
+
+/* ==========================================================================
+   6. GALLERY CTA , TESTIMONAILS CTA , CODE OF CONDUCT CTA
+   ========================================================================== */
+.about-nav-grid {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px; /* Ensures items don't touch the screen edge on mobile */
+}
+
+.nav-grid-container {
+    display: grid;
+    /* Desktop: 3 columns */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: -120px;
+}
+
+.nav-grid-item {
+    height: 280px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 4px solid #333;
+    transition: 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.nav-grid-item:hover {
+    border-bottom: 4px solid #ff0000;
+    transform: translateY(-5px);
+}
+
+.nav-grid-item h3 {
+    font-family: 'Oswald', sans-serif;
+    color: #fff;
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+}
+
+.nav-grid-item p {
+    color: #bbb;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.grid-btn {
+    color: #ff0000;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+    .nav-grid-container {
+        /* Force single column stack on mobile */
+        grid-template-columns: 1fr; 
+    }
+    
+    .nav-grid-item {
+        /* Slightly shorter height for better mobile flow */
+        height: 220px; 
+    }
+}
+
+/*=================================================
+ 7. FOOTER 
+ ============================================*/
+
+/* XTREME INDUSTRIAL FOOTER */
+.xtreme-footer {
+    background: #000;
+    position: relative;
+    padding-top: 20px; /* Reduced from 60px */
+    margin-top: 90px;  /* Brought closer to the section above */
+    color: #fff;
+}
+
+/* The aggressive diagonal top edge - Made slightly shallower */
+.footer-top-slant {
+    position: absolute;
+    top: -30px; /* Reduced from -40px */
+    left: 0;
+    width: 100%;
+    height: 60px; /* Reduced from 80px */
+    background: #000;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+    border-top: 4px solid #d90000;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 10px 20px; /* Thinner padding */
+    margin-top: 60px;
+}
+
+.footer-main {
+    text-align: center;
+    padding-bottom: 20px; /* Reduced from 40px */
+}
+
+/* Big Bold Branding - PULLED UP HIGHER */
+.footer-logo-section {
+    margin-top: -60px; /* This pulls the logo UP into the slant */
+    position: relative;
+    z-index: 5;
+}
+
+.footer-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.8rem; /* Made slightly bigger since it's the hero now */
+    letter-spacing: -1px;
+    margin-bottom: 0px; 
+}
+
+.footer-logo span {
+    color: #d90000;
+    -webkit-text-stroke: 1px #d90000;
+}
+
+.footer-logo-section p {
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 4px;
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 15px; /* Reduced from 30px */
+}
+
+.footer-divider {
+    width: 40px; /* Smaller divider */
+    height: 3px;
+    background: #d90000;
+    margin: 0 auto 30px; /* Reduced from 50px */
+}
+
+/* 3-Column Info Grid - MORE COMPACT */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; /* Reduced from 40px */
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 20px; /* Reduced from 40px */
+}
+
+.footer-col h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    color: #d90000;
+    margin-bottom: 10px;
+}
+
+.footer-col p, .footer-col a {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; /* Slightly smaller text */
+    color: #aaa;
+    text-decoration: none;
+    line-height: 1.4;
+}
+
+/* Bottom Copyright Bar */
+.footer-bottom-bar {
+    padding: 15px 0; /* Reduced from 30px */
+    text-align: center;
+}
+
+.footer-bottom-bar p {
+    font-size: 0.7rem;
+    color: #444;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.footer-map {
+    margin-top: 15px;
+    border: 1px solid #1d1b1b; /* Dark border to match theme */
+    border-radius: 4px;
+    overflow: hidden;
+    filter: grayscale(100%) invert(90%) contrast(100%); /* Optional: Makes the map dark-themed */
+    transition: 0.3s;
+}
+
+.footer-map:hover {
+    filter: none; /* Map turns to full color on hover */
+}
+
+.footer-map iframe {
+    display: block;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.footer-socials a {
+    width: 38px;
+    height: 38px;
+    background: #111; /* Dark background */
+    border: 1px solid #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.footer-socials svg {
+    width: 18px; /* Perfectly sized inside the circle */
+    height: 18px;
+    fill: #fff; /* Icons start as white */
+    transition: fill 0.3s ease;
+}
+
+.footer-socials a:hover {
+    background: #000;
+    border-color: #d90000; /* Red border on hover */
+    transform: translateY(-3px);
+}
+
+.footer-socials a:hover svg {
+    fill: #d90000; /* Icons turn red on hover */
+}
+
+/* Clean Alignment for Hours Column */
+.hours-wrap p {
+    display: flex;
+    justify-content: space-between; /* Pushes time to the right */
+    border-bottom: 1px solid #111; /* Subtle divider */
+    padding-bottom: 5px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.hours-wrap p span:first-child {
+    color: #d90000; /* Red days */
+    font-weight: bold;
+}
+
+/* Ensure social icons are aligned left under the title */
+.footer-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    justify-content: center; /* Center them for the main-section feel */
+}
+
+/* Make sure the grid handles the center column correctly */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    align-items: start;
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .footer-socials {
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   8. UTILITIES & ANIMATIONS
+   ========================================================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (max-width: 768px) {
+    .origin-container { flex-direction: column; text-align: center; }
+    .hero-content-cool h1 { font-size: 3.5rem; }
+    .card-stack { width: 280px; height: 400px; }
+    .pos-2 { transform: translate3d(40%, 0, -200px) scale(0.7); }
+    .pos-3 { transform: translate3d(-40%, 0, -200px) scale(0.7); }
+}
+

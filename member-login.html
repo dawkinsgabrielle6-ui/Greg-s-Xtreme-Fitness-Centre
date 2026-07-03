@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xtreme Portal | Greg's Xtreme Fitness Centre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --red: #ff0000; --dark: #050505; --grey: #1a1a1a; }
+        * { box-sizing: border-box; }
+
+        body {
+            background: var(--dark);
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            /* Flexbox ensures footer stays at bottom */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-header {
+            position: absolute; /* Changed to absolute so it stays within the hero section */
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 30px;
+            z-index: 1000;
+        }
+
+        /* --- HERO SECTION ADJUSTMENT --- */
+        .hero-split {
+            display: flex;
+            /* Adjust height to leave room for the footer */
+            flex: 1; 
+            width: 100vw;
+        }
+
+        .visual-side {
+            flex: 1.2;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+            url('Images/Weight.jpeg') center/cover; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 60px;
+            border-right: 2px solid var(--red);
+        }
+
+        .visual-side h2 {
+            font-family: 'Syncopate';
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .form-side {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background: #080808;
+            text-align: center;
+        }
+
+        /* --- COMING SOON CONTENT --- */
+        .auth-card { width: 100%; max-width: 400px; }
+        
+        .brand-logo { 
+            font-family: 'Syncopate'; 
+            font-size: 0.8rem; 
+            letter-spacing: 5px; 
+            color: var(--red); 
+            margin-bottom: 15px; 
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border: 1px solid var(--red);
+            color: var(--red);
+            font-family: 'Oswald';
+            font-size: 0.8rem;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        .header-title { 
+            font-family: 'Oswald'; 
+            font-size: clamp(2.5rem, 4vw, 3.5rem); 
+            text-transform: uppercase; 
+            margin: 0 0 20px 0; 
+            line-height: 0.9; 
+        }
+
+        .sub-text {
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .action-btn {
+            width: 100%; 
+            background: transparent; 
+            color: #fff; 
+            border: 1px solid #444;
+            padding: 18px; 
+            font-family: 'Oswald'; 
+            font-weight: bold;
+            font-size: 1rem; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .action-btn:hover { 
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        @media (max-width: 900px) {
+            .hero-split { flex-direction: column; }
+            .visual-side { display: none; }
+            .form-side { flex: 1; padding-top: 100px; }
+        }
+
+        /* --- FOOTER STYLES --- */
+        footer {
+            background: #000;
+            border-top: 1px solid #111;
+        }
+
+        .footer-bottom-bar {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-bottom-bar p {
+            font-size: 0.7rem;
+            color: #555;
+            letter-spacing: 1px;
+            margin: 0;
+            font-family: 'Oswald';
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-header">
+        <div class="brand-logo" style="margin:0; align-self:center;">GREG'S XTREME</div>
+    </nav>
+
+    <div class="hero-split">
+        <div class="visual-side">
+            <p style="color:var(--red); font-family:'Oswald'; letter-spacing: 3px;">EST. 1998</p>
+            <h2>NEXT<br>LEVEL.</h2>
+        </div>
+
+        <div class="form-side">
+            <div class="auth-card">
+                <div class="status-badge">PORTAL OFFLINE</div>
+                <div class="brand-logo">MEMBER ACCESS</div>
+                <h1 class="header-title">LOGIN<br>COMING SOON</h1>
+                <p class="sub-text">
+                    We're currently upgrading our member experience. Digital registration and online payments will be live shortly. 
+                    <br><br>
+                    Please visit the front desk for immediate assistance.
+                </p>
+                <a href="index.html" class="action-btn">RETURN TO HOME</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-bottom-bar">
+            <p>© 2026 GREG'S XTREME FITNESS CENTRE. TAKING YOUR FITNESS TO THE NEXT LEVEL.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
