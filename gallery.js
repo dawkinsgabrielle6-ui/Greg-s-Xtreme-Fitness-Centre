@@ -19,6 +19,8 @@ const albumPhotos = {
 
 // 3. SLIDER LOGIC
 function showSlide(index) {
+    if (!slides.length) return;
+    
     slides.forEach(slide => slide.classList.remove('active'));
     
     if (index >= slides.length) currentSlide = 0;
@@ -28,11 +30,13 @@ function showSlide(index) {
     slides[currentSlide].classList.add('active');
     
     const color = slides[currentSlide].getAttribute('data-color');
-    document.documentElement.style.setProperty('--accent-color', color);
+    if (color) {
+        document.documentElement.style.setProperty('--accent-color', color);
+    }
 }
 
-if(nextBtn) nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
-if(prevBtn) prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+if (nextBtn) nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+if (prevBtn) prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
 
 // 4. LIGHTBOX SETUP
 const lightbox = document.createElement('div');
@@ -60,36 +64,52 @@ function openLightbox(index) {
 }
 
 function updateLightbox() {
-    lbImg.src = currentAlbumImages[lbIndex];
+    if (lbImg && currentAlbumImages[lbIndex]) {
+        lbImg.src = currentAlbumImages[lbIndex];
+    }
 }
 
 // Lightbox Navigation
-lbNext.onclick = (e) => {
-    e.stopPropagation();
-    lbIndex = (lbIndex + 1) % currentAlbumImages.length;
-    updateLightbox();
-};
+if (lbNext) {
+    lbNext.onclick = (e) => {
+        e.stopPropagation();
+        if (currentAlbumImages.length) {
+            lbIndex = (lbIndex + 1) % currentAlbumImages.length;
+            updateLightbox();
+        }
+    };
+}
 
-lbPrev.onclick = (e) => {
-    e.stopPropagation();
-    lbIndex = (lbIndex - 1 + currentAlbumImages.length) % currentAlbumImages.length;
-    updateLightbox();
-};
+if (lbPrev) {
+    lbPrev.onclick = (e) => {
+        e.stopPropagation();
+        if (currentAlbumImages.length) {
+            lbIndex = (lbIndex - 1 + currentAlbumImages.length) % currentAlbumImages.length;
+            updateLightbox();
+        }
+    };
+}
 
-lbClose.onclick = () => lightbox.classList.remove('active');
+if (lbClose) {
+    lbClose.onclick = () => lightbox.classList.remove('active');
+}
 
-// 5. OPEN ALBUM GRID LOGIC (The Fixed Part)
+// 5. OPEN ALBUM GRID LOGIC
 document.querySelectorAll('.view-album-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const slide = btn.closest('.slide');
+        if (!slide) return;
+
         const albumKey = slide.getAttribute('data-album');
-        const albumName = slide.querySelector('h2').innerText;
+        const h2Elem = slide.querySelector('h2');
+        const albumName = h2Elem ? h2Elem.innerText : "Album";
         
-        document.getElementById('album-title').innerText = albumName;
-        gridContent.innerHTML = "";
+        const titleElem = document.getElementById('album-title');
+        if (titleElem) titleElem.innerText = albumName;
         
-        if(albumPhotos[albumKey]) {
-            // Standardizing path to look inside your Images folder
+        if (gridContent) gridContent.innerHTML = "";
+        
+        if (albumPhotos[albumKey] && gridContent) {
             currentAlbumImages = albumPhotos[albumKey].map(name => `./Images/${name}`);
             
             currentAlbumImages.forEach((src, index) => {
@@ -99,7 +119,6 @@ document.querySelectorAll('.view-album-btn').forEach(btn => {
                 
                 img.onclick = () => openLightbox(index); 
                 
-                // Detailed error log if a specific photo fails
                 img.onerror = function() {
                     console.warn("Missing file: " + this.src);
                     this.style.display = "none"; 
@@ -108,12 +127,16 @@ document.querySelectorAll('.view-album-btn').forEach(btn => {
                 gridContent.appendChild(img);
             });
         }
-        albumOverlay.classList.add('active');
+        if (albumOverlay) albumOverlay.classList.add('active');
     });
 });
 
-// 5. CLOSE LOGIC
-closeBtn.addEventListener('click', () => albumOverlay.classList.remove('active'));
+// 6. CLOSE LOGIC
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+        if (albumOverlay) albumOverlay.classList.remove('active');
+    });
+}
 
 window.onclick = (event) => {
     if (event.target == albumOverlay) albumOverlay.classList.remove('active');
@@ -122,18 +145,18 @@ window.onclick = (event) => {
 
 // SVG Icon Setup for Lightbox
 function setupCuteLightbox() {
-    const lbClose = document.getElementById('close-lightbox');
-    const lbPrev = document.getElementById('lb-prev');
-    const lbNext = document.getElementById('lb-next');
+    const lbCloseIcon = document.getElementById('close-lightbox');
+    const lbPrevIcon = document.getElementById('lb-prev');
+    const lbNextIcon = document.getElementById('lb-next');
 
-    if(lbClose) {
-        lbClose.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+    if (lbCloseIcon) {
+        lbCloseIcon.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
     }
-    if(lbPrev) {
-        lbPrev.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>`;
+    if (lbPrevIcon) {
+        lbPrevIcon.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>`;
     }
-    if(lbNext) {
-        lbNext.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+    if (lbNextIcon) {
+        lbNextIcon.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
     }
 }
 
@@ -142,24 +165,23 @@ document.addEventListener('DOMContentLoaded', () => {
     showSlide(0); // Initialize first slide
 });
 
-
-  // Mobile Menu Toggle
+// 7. MOBILE MENU TOGGLE
 const mobileBtn = document.querySelector('.mobile-menu-btn');
 const navContainer = document.querySelector('.nav-container');
 
-mobileBtn.addEventListener('click', (e) => {
-    // Stop the click from bubbling up to the document 
-    // so the document listener doesn't immediately close the menu
-    e.stopPropagation(); 
-    navContainer.classList.toggle('mobile-active');
-});
+if (mobileBtn) {
+    mobileBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        if (navContainer) navContainer.classList.toggle('mobile-active');
+    });
+}
 
 // Mobile Dropdown Toggle
 document.querySelectorAll('.dropdown > a').forEach(trigger => {
     trigger.addEventListener('click', function(e) {
         if (window.innerWidth <= 992) {
             e.preventDefault();
-            e.stopPropagation(); // Prevents the dropdown click from closing the whole menu
+            e.stopPropagation(); 
             const subMenu = this.nextElementSibling;
             if (subMenu) {
                 const isVisible = subMenu.style.display === 'block';
@@ -169,18 +191,16 @@ document.querySelectorAll('.dropdown > a').forEach(trigger => {
     });
 });
 
-// Click anywhere else to close
+// Click anywhere else to close mobile menus
 document.addEventListener('click', function(event) {
+    if (!navContainer) return;
+    
     const isMobileActive = navContainer.classList.contains('mobile-active');
 
-    // Only run if the menu is actually open
     if (isMobileActive) {
-        // Remove active class and reset dropdowns
         navContainer.classList.remove('mobile-active');
         document.querySelectorAll('.dropdown-menu').forEach(menu => {
             menu.style.display = 'none';
         });
     }
 });
-});
-
